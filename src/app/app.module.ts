@@ -4,10 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { CoursesModule } from './features/courses/courses.module';
-import { BreadcrumbsModule } from './shared/components/breadcrumbs/breadcrumbs.module';
-import { FooterModule } from './shared/components/footer/footer.module';
-import { HeaderModule } from './shared/components/header/header.module';
+import { FeaturesModule } from './features/features.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,10 +13,8 @@ import { HeaderModule } from './shared/components/header/header.module';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-    CoursesModule,
-    HeaderModule,
-    FooterModule,
-    BreadcrumbsModule,
+    FeaturesModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
