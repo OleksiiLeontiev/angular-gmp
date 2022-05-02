@@ -3,31 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
-import { CoursesItemComponent } from './components/courses-item/courses-item.component';
-import { CoursesListComponent } from './components/courses-list/courses-list.component';
-import { CoursesPageComponent } from './components/courses-page/courses-page.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
-import { LogoComponent } from './components/logo/logo.component';
-import { MenuComponent } from './components/menu/menu.component';
-import { SearchFormComponent } from './components/search-form/search-form.component';
 import { CoreModule } from './core/core.module';
+import { CoursesModule } from './features/courses/courses.module';
+import { BreadcrumbsModule } from './shared/components/breadcrumbs/breadcrumbs.module';
+import { FooterModule } from './shared/components/footer/footer.module';
+import { HeaderModule } from './shared/components/header/header.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    BreadcrumbsComponent,
-    FooterComponent,
-    CoursesListComponent,
-    CoursesItemComponent,
-    LogoComponent,
-    MenuComponent,
-    SearchFormComponent,
-    CoursesPageComponent,
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CoreModule,
+    CoursesModule,
+    HeaderModule,
+    FooterModule,
+    BreadcrumbsModule,
   ],
-  imports: [BrowserModule, AppRoutingModule, CoreModule],
   providers: [],
   bootstrap: [AppComponent],
 })
