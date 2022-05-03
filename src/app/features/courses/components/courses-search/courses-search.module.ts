@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CoursesSearchComponent } from './courses-search.component';
 
 @NgModule({
+  imports: [CommonModule],
   declarations: [CoursesSearchComponent],
   exports: [CoursesSearchComponent],
-  imports: [CommonModule],
 })
 export class CoursesSearchModule {}

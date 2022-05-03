@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu.component';
 
 @NgModule({
+  imports: [CommonModule],
   declarations: [MenuComponent],
   exports: [MenuComponent],
-  imports: [CommonModule],
 })
 export class MenuModule {}
