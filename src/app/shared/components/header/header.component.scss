@@ -1,0 +1,10 @@
+.header {
+  background-color: #303240;
+  color: #fff;
+
+  &__container {
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+  }
+}

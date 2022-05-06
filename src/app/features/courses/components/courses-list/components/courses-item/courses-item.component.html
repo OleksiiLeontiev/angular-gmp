@@ -1,1 +1,44 @@
-<p>courses-item works!</p>
+<div class="courses-list__item">
+  <div class="courses-list__item_top flex">
+    <h2 class="courses-list__item_title">
+      {{ course.title }}
+    </h2>
+    <div class="courses-list__item_metabox flex">
+      <div class="courses-list__item_meta">
+        <span class="courses-list__item_meta-icon material-icons"
+          >query_builder</span
+        >
+        {{ getFormattedDuration(course.duration) }}
+      </div>
+      <div class="courses-list__item_meta">
+        <span class="courses-list__item_meta-icon material-icons"
+          >calendar_today</span
+        >
+        {{ course.creationDate }}
+      </div>
+    </div>
+  </div>
+  <div class="courses-list__item_bottom flex">
+    <div class="courses-list__item_description">
+      {{ course.description }}
+    </div>
+    <div class="courses-list__item_buttonbox flex">
+      <app-button
+        class="courses-list__item_button"
+        className="secondary small"
+        text="Edit"
+        icon="edit"
+        (click)="editClick()"
+      >
+      </app-button>
+      <app-button
+        class="courses-list__item_button"
+        className="secondary small"
+        text="Delete"
+        icon="delete"
+        (click)="deleteClick()"
+      >
+      </app-button>
+    </div>
+  </div>
+</div>

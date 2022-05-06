@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import "material-icons/iconfont/material-icons.css";
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+}
+body {
+  background-color: #f5f6f9;
+  margin: 0;
+  font-family: "SourceSansPro-Regular", Roboto, "Helvetica Neue", sans-serif;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+}
+input {
+  border-radius: 3px;
+  border: 1px solid #ced0db;
+  background: #ffffff;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 8px 12px;
+}
+.container {
+  width: 100%;
+  max-width: 1150px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+.flex {
+  display: flex;
+}

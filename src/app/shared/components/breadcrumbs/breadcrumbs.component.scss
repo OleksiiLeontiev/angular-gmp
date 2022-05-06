@@ -1,0 +1,15 @@
+.breadcrumbs {
+  background-color: #fff;
+
+  &__container {
+    align-items: center;
+    height: 64px;
+  }
+  &__link {
+    line-height: 24px;
+    color: #464a5a;
+    font-size: 14px;
+    text-align: left;
+    font-weight: 700;
+  }
+}

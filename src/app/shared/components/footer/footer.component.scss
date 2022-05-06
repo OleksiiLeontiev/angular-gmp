@@ -1,0 +1,14 @@
+.footer {
+  padding: 16px 0 20px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 2em;
+  background-color: #303240;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  &__container {
+    justify-content: flex-end;
+  }
+}

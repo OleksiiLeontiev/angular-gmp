@@ -1,0 +1,10 @@
+.menu {
+  display: flex;
+  align-items: center;
+
+  &__item {
+    &:first-child {
+      margin-right: 24px;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+.courses-list {
+  padding-top: 17px;
+
+  &__more {
+    padding: 6px 0;
+    background-color: #fff;
+    text-align: center;
+
+    &_link {
+      line-height: 24px;
+      color: #5681ee;
+      font-size: 12px;
+      text-align: center;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,2 +1,12 @@
-<p>courses-list works!</p>
-<app-courses-item></app-courses-item>
+<div class="courses-list">
+  <app-courses-item
+    *ngFor="let course of courses; trackBy: identify"
+    [course]="course"
+    (deleteEvent)="deleteCourse(course)"
+    (editEvent)="editCourse(course)"
+  >
+  </app-courses-item>
+  <div class="courses-list__more">
+    <a class="courses-list__more_link" (click)="loadMoreClick()">Load more</a>
+  </div>
+</div>

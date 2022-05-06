@@ -1,1 +1,9 @@
-<p>courses-search works!</p>
+<div class="search">
+  <input
+    type="text"
+    class="search__input"
+    [(ngModel)]="searchValue"
+    placeholder="Type to search"
+  />
+  <app-button text="Search" (click)="searchClick()"></app-button>
+</div>
