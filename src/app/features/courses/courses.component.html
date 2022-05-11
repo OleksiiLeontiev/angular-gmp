@@ -1,3 +1,13 @@
-<p>courses works!</p>
-<app-courses-search></app-courses-search>
-<app-courses-list></app-courses-list>
+<div class="courses">
+  <div class="container">
+    <app-courses-search></app-courses-search>
+    <div class="courses__add flex">
+      <app-button
+        type="secondary"
+        text="Add course"
+        icon="add_circle_outline"
+      ></app-button>
+    </div>
+    <app-courses-list [courses]="courses"></app-courses-list>
+  </div>
+</div>
