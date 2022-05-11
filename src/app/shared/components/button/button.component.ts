@@ -13,7 +13,10 @@ export class ButtonComponent implements OnInit {
   public icon: string = '';
 
   @Input()
-  public className: string = '';
+  public type: 'primary' | 'secondary' | 'text-button' = 'primary';
+
+  @Input()
+  public size: 'small' | 'medium' = 'medium';
 
   constructor() {}
 
