@@ -1,6 +1,9 @@
 <div class="courses">
   <div class="container">
-    <app-courses-search></app-courses-search>
+    <app-courses-search
+      [(searchValue)]="searchValue"
+      (searchClickEvent)="searchClick($event)"
+    ></app-courses-search>
     <div class="courses__add flex">
       <app-button
         type="secondary"
@@ -8,6 +11,15 @@
         icon="add_circle_outline"
       ></app-button>
     </div>
-    <app-courses-list [courses]="courses"></app-courses-list>
+    <app-courses-list
+      *ngIf="courses.length; else not_found"
+      [courses]="courses | orderBy"
+    ></app-courses-list>
+
+    <ng-template #not_found>
+      <div class="courses__not_found">
+        There are no courses yet. Feel free to add new courses.
+      </div>
+    </ng-template>
   </div>
 </div>

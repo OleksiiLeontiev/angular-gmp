@@ -25,6 +25,16 @@
     align-items: center;
   }
 
+  &_icon {
+    color: rgb(245, 203, 16);
+    margin-left: 10px;
+    display: inline-block;
+  }
+
+  &.top-rated {
+    background-color: #f9f4d4;
+  }
+
   &_metabox {
     align-items: center;
     justify-content: space-between;

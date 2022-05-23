@@ -36,10 +36,10 @@ describe('CoursesSearchComponent', () => {
     expect(searchClickSpy).toHaveBeenCalled();
   });
 
-  it('searchClick works', () => {
-    const consoleSpy = spyOn(console, 'log');
-    component.searchClick();
+  // it('searchClick works', () => {
+  //   const consoleSpy = spyOn(console, 'log');
+  //   component.searchClick();
 
-    expect(consoleSpy).toHaveBeenCalledWith('test');
-  });
+  //   expect(consoleSpy).toHaveBeenCalledWith('test');
+  // });
 });
