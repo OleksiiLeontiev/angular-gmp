@@ -54,16 +54,4 @@ describe('CoursesItemComponent', () => {
     editButton.triggerEventHandler('click', null);
     expect(editEventSpy).toHaveBeenCalled();
   });
-
-  // it('getFormattedDuration works with hours and minutes', () => {
-  //   expect(component.getFormattedDuration(88)).toEqual('1h 28min');
-  // });
-
-  // it('getFormattedDuration works with only hours', () => {
-  //   expect(component.getFormattedDuration(120)).toEqual('2h ');
-  // });
-
-  // it('getFormattedDuration works with only minutes', () => {
-  //   expect(component.getFormattedDuration(59)).toEqual('59min');
-  // });
 });

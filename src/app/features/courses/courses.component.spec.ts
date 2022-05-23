@@ -23,4 +23,9 @@ describe('CoursesComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('search filter works', () => {
+    component.searchClick('English');
+    expect(component.courses.length).toEqual(2);
+  });
 });

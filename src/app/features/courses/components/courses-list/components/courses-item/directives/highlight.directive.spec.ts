@@ -6,7 +6,9 @@ import { HighlightDirective } from './highlight.directive';
 const dayTime = 1000 * 60 * 60 * 24;
 
 @Component({
-  template:  `<div class="green-border" [appHighlight]="greenDate"></div> <div class="blue-border" [appHighlight]="blueDate"></div> <div class="default-border" [appHighlight]="defaultDate"></div> `,
+  template: `<div class="green-border" [appHighlight]="greenDate"></div>
+    <div class="blue-border" [appHighlight]="blueDate"></div>
+    <div class="default-border" [appHighlight]="defaultDate"></div> `,
 })
 class TestHighlightComponent {
   greenDate: string = new Date(Date.now() - dayTime * 7).toLocaleDateString(
