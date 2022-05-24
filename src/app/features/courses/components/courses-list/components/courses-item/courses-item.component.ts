@@ -27,10 +27,4 @@ export class CoursesItemComponent implements OnInit {
   editClick() {
     this.editEvent.emit();
   }
-
-  getFormattedDuration(duration: number): string {
-    const hoursString = duration > 59 ? `${Math.floor(duration / 60)}h ` : '';
-    const minutesString = duration % 60 ? `${duration % 60}min` : '';
-    return `${hoursString}${minutesString}`;
-  }
 }

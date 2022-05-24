@@ -5,4 +5,11 @@
   &__add {
     justify-content: flex-end;
   }
+
+  &__not_found {
+    display: flex;
+    padding: 40px 20px;
+    justify-content: center;
+    font-size: 22px;
+  }
 }

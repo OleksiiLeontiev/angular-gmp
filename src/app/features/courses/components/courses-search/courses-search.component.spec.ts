@@ -30,16 +30,16 @@ describe('CoursesSearchComponent', () => {
   });
 
   it('should trigger searchClick on search button click', () => {
-    const searchClickSpy = spyOn(component, 'searchClick');
+    const searchClickSpy = spyOn(component, 'onSearch');
     searchButton.triggerEventHandler('click', null);
 
     expect(searchClickSpy).toHaveBeenCalled();
   });
 
   it('searchClick works', () => {
-    const consoleSpy = spyOn(console, 'log');
-    component.searchClick();
+    const searchClickSpy = spyOn(component.searchValueChange, 'emit');
+    component.onSearch();
 
-    expect(consoleSpy).toHaveBeenCalledWith('test');
+    expect(searchClickSpy).toHaveBeenCalledWith('test');
   });
 });

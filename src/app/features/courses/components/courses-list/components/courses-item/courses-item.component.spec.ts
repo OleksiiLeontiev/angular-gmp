@@ -1,6 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { TimePipe } from 'src/app/shared';
 
 import { CoursesItemComponent } from './courses-item.component';
 
@@ -12,7 +13,7 @@ describe('CoursesItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoursesItemComponent],
+      declarations: [CoursesItemComponent, TimePipe],
     }).compileComponents();
   });
 
@@ -27,6 +28,7 @@ describe('CoursesItemComponent', () => {
       duration: 88,
       description:
         "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
+      topRated: true,
     };
 
     deleteButton = fixture.debugElement.query(By.css('.jasmine-delete-button'));
@@ -51,17 +53,5 @@ describe('CoursesItemComponent', () => {
 
     editButton.triggerEventHandler('click', null);
     expect(editEventSpy).toHaveBeenCalled();
-  });
-
-  it('getFormattedDuration works with hours and minutes', () => {
-    expect(component.getFormattedDuration(88)).toEqual('1h 28min');
-  });
-
-  it('getFormattedDuration works with only hours', () => {
-    expect(component.getFormattedDuration(120)).toEqual('2h ');
-  });
-
-  it('getFormattedDuration works with only minutes', () => {
-    expect(component.getFormattedDuration(59)).toEqual('59min');
   });
 });

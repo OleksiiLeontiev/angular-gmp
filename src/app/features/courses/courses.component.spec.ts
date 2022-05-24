@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesComponent } from './courses.component';
+import { FilterPipe, OrderByPipe } from './pipes';
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
@@ -8,7 +9,7 @@ describe('CoursesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoursesComponent],
+      declarations: [CoursesComponent, OrderByPipe, FilterPipe],
     }).compileComponents();
   });
 
@@ -20,5 +21,10 @@ describe('CoursesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('search filter works', () => {
+    component.onSearch('test');
+    expect(component.searchValue).toEqual('test');
   });
 });

@@ -9,10 +9,15 @@ import { Course } from './models/course';
 })
 export class CoursesComponent implements OnInit {
   public courses: Course[] = [];
+  public searchValue: string = '';
 
   constructor() {}
 
   ngOnInit(): void {
     this.courses = COURSES;
+  }
+
+  onSearch(value: string) {
+    this.searchValue = value;
   }
 }

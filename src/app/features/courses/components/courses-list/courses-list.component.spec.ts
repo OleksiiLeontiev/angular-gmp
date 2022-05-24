@@ -35,13 +35,17 @@ describe('CoursesListComponent', () => {
     const consoleSpy = spyOn(console, 'log');
     component.deleteCourse(component.courses[0]);
 
-    expect(consoleSpy).toHaveBeenCalledWith('delete id=1');
+    expect(consoleSpy).toHaveBeenCalledWith(
+      `delete id=${component.courses[0].id}`
+    );
   });
 
   it('editCourse works', () => {
     const consoleSpy = spyOn(console, 'log');
     component.editCourse(component.courses[0]);
 
-    expect(consoleSpy).toHaveBeenCalledWith('edit id=1');
+    expect(consoleSpy).toHaveBeenCalledWith(
+      `edit id=${component.courses[0].id}`
+    );
   });
 });
