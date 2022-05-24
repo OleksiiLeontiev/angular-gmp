@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { COURSES } from './mocks/mock-courses';
 import { Course } from './models/course';
-import { FilterPipe } from './pipes/filter.pipe';
 
 @Component({
   selector: 'app-courses',
@@ -11,7 +10,6 @@ import { FilterPipe } from './pipes/filter.pipe';
 export class CoursesComponent implements OnInit {
   public courses: Course[] = [];
   public searchValue: string = '';
-  private filter = new FilterPipe();
 
   constructor() {}
 
@@ -19,7 +17,7 @@ export class CoursesComponent implements OnInit {
     this.courses = COURSES;
   }
 
-  searchClick($event: any) {
-    this.courses = this.filter.transform(COURSES, $event);
+  onSearch(value: string) {
+    this.searchValue = value;
   }
 }

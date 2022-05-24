@@ -1,1 +1,1 @@
-export * from './time.pipe';
+export * from './time';

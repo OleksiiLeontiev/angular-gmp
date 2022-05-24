@@ -3,12 +3,18 @@ import { CommonModule } from '@angular/common';
 import { CoursesComponent } from './courses.component';
 import { CoursesListModule, CoursesSearchModule } from './components';
 import { ButtonModule } from 'src/app/shared';
-import { OrderByPipe } from './pipes/order-by.pipe';
-import { FilterPipe } from './pipes/filter.pipe';
+import { FilterModule, OrderByModule } from './pipes';
 
 @NgModule({
-  imports: [CommonModule, CoursesSearchModule, CoursesListModule, ButtonModule],
-  declarations: [CoursesComponent, OrderByPipe, FilterPipe],
+  imports: [
+    CommonModule,
+    CoursesSearchModule,
+    CoursesListModule,
+    ButtonModule,
+    OrderByModule,
+    FilterModule,
+  ],
+  declarations: [CoursesComponent],
   exports: [CoursesComponent],
 })
 export class CoursesModule {}

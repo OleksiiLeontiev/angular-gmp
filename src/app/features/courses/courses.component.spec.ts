@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesComponent } from './courses.component';
-import { FilterPipe } from './pipes/filter.pipe';
-import { OrderByPipe } from './pipes/order-by.pipe';
+import { FilterPipe, OrderByPipe } from './pipes';
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
@@ -25,7 +24,7 @@ describe('CoursesComponent', () => {
   });
 
   it('search filter works', () => {
-    component.searchClick('English');
-    expect(component.courses.length).toEqual(2);
+    component.onSearch('test');
+    expect(component.searchValue).toEqual('test');
   });
 });

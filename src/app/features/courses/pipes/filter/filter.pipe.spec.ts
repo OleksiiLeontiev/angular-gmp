@@ -1,4 +1,4 @@
-import { COURSES } from '../mocks/mock-courses';
+import { COURSES } from '../../mocks/mock-courses';
 import { FilterPipe } from './filter.pipe';
 
 describe('FilterPipe', () => {

@@ -1,8 +1,7 @@
 <div class="courses">
   <div class="container">
     <app-courses-search
-      [(searchValue)]="searchValue"
-      (searchClickEvent)="searchClick($event)"
+      (searchValueChange)="onSearch($event)"
     ></app-courses-search>
     <div class="courses__add flex">
       <app-button
@@ -13,7 +12,7 @@
     </div>
     <app-courses-list
       *ngIf="courses.length; else not_found"
-      [courses]="courses | orderBy"
+      [courses]="courses | filter: searchValue | orderBy"
     ></app-courses-list>
 
     <ng-template #not_found>

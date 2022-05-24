@@ -1,4 +1,4 @@
-import { COURSES } from '../mocks/mock-courses';
+import { COURSES } from '../../mocks/mock-courses';
 import { OrderByPipe } from './order-by.pipe';
 
 describe('OrderByPipe', () => {
