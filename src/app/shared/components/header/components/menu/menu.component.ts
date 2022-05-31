@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthorizationService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-menu',
@@ -6,7 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-  constructor() {}
+  @Output()
+  loginClickEvent = new EventEmitter();
+
+  constructor(private authorizationService: AuthorizationService) {}
 
   ngOnInit(): void {}
+
+  isAuthenticated() {
+    return this.authorizationService.isAuthenticated();
+  }
+  onLoginClick(): void {
+    this.loginClickEvent.emit();
+  }
+  onLogoutClick(): void {
+    this.authorizationService.logout();
+  }
 }

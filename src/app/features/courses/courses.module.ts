@@ -4,6 +4,7 @@ import { CoursesComponent } from './courses.component';
 import { CoursesListModule, CoursesSearchModule } from './components';
 import { ButtonModule } from 'src/app/shared';
 import { FilterModule, OrderByModule } from './pipes';
+import { CoursesService } from './courses.service';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { FilterModule, OrderByModule } from './pipes';
     FilterModule,
   ],
   declarations: [CoursesComponent],
+  providers: [CoursesService],
   exports: [CoursesComponent],
 })
 export class CoursesModule {}
