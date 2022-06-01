@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthorizationService } from './services';
-import { IfAuthenticatedDirective, IfAuthenticatedModule } from './directives';
 
 @NgModule({
-  imports: [CommonModule, IfAuthenticatedModule],
+  imports: [CommonModule],
   declarations: [],
   providers: [AuthorizationService],
-  exports: [IfAuthenticatedDirective]
+  exports: [],
 })
 export class CoreModule {}

@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu.component';
 import { ButtonModule } from '../../../button';
-import { IfAuthenticatedModule } from 'src/app/core/directives';
-
 @NgModule({
-  imports: [CommonModule, ButtonModule, IfAuthenticatedModule],
+  imports: [CommonModule, ButtonModule],
   declarations: [MenuComponent],
   exports: [MenuComponent],
 })

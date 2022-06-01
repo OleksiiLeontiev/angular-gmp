@@ -10,6 +10,9 @@ export class MenuComponent implements OnInit {
   @Output()
   loginClickEvent = new EventEmitter();
 
+  @Output()
+  logoutClickEvent = new EventEmitter();
+
   constructor(private authorizationService: AuthorizationService) {}
 
   ngOnInit(): void {}
@@ -21,6 +24,7 @@ export class MenuComponent implements OnInit {
     this.loginClickEvent.emit();
   }
   onLogoutClick(): void {
+    this.logoutClickEvent.emit();
     this.authorizationService.logout();
   }
 }

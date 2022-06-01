@@ -1,6 +1,6 @@
 <div class="menu">
   <app-button
-    *appIfAuthenticated="false"
+    *ngIf="!isAuthenticated()"
     type="text-button"
     class="menu__item"
     text="User login"
@@ -8,7 +8,7 @@
     (click)="onLoginClick()"
   ></app-button>
   <app-button
-    *appIfAuthenticated="true"
+    *ngIf="isAuthenticated()"
     type="text-button"
     class="menu__item"
     text="Log off"

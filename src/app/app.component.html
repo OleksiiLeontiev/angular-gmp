@@ -1,5 +1,6 @@
 <app-header
   (loginClickEvent)="onLoginClick()"
+  (logoutClickEvent)="onLogoutClick()"
   [minHeader]="showLoginForm()"
 ></app-header>
 <app-courses *ngIf="!showLoginForm()"></app-courses>

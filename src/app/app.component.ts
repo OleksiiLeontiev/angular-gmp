@@ -15,6 +15,9 @@ export class AppComponent {
   onLoginClick(): void {
     this.pageView = 'login';
   }
+  onLogoutClick(): void {
+    this.pageView = 'default';
+  }
   showLoginForm(): boolean {
     return (
       !this.authorizationService.isAuthenticated() && this.pageView === 'login'
