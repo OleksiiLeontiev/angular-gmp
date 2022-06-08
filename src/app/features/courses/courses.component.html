@@ -1,24 +1,5 @@
 <div class="courses">
   <div class="container">
-    <app-courses-search
-      (searchValueChange)="onSearch($event)"
-    ></app-courses-search>
-    <div class="courses__add flex">
-      <app-button
-        type="secondary"
-        text="Add course"
-        icon="add_circle_outline"
-      ></app-button>
-    </div>
-    <app-courses-list
-      *ngIf="coursesLength; else not_found"
-      [courses]="getCourses() | filter: searchValue | orderBy"
-    ></app-courses-list>
-
-    <ng-template #not_found>
-      <div class="courses__not_found">
-        There are no courses yet. Feel free to add new courses.
-      </div>
-    </ng-template>
+    <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,0 +1,33 @@
+.input-box {
+  color: #474A59;
+  margin-bottom: 12px;
+  max-width: 100%;
+
+  &.default {
+    width: 100%;
+  }
+  &.medium {
+    width: 312px;
+  }
+  &.small {
+    width: 150px;
+  }
+}
+.input-label {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+
+  &__title {
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  &__required {
+    line-height: 24px;
+    font-size: 12px;
+  }
+}
+.input {
+  width: 100%;
+}

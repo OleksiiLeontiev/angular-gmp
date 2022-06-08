@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, RoutesRecognized } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,24 +7,16 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @Input()
-  minHeader: boolean = true;
+  public minHeader: boolean = false;
 
-  @Output()
-  loginClickEvent = new EventEmitter();
+  constructor(private router: Router) {}
 
-  @Output()
-  logoutClickEvent = new EventEmitter();
-
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  onLoginClick(): void {
-    this.loginClickEvent.emit();
-  }
-
-  onLogoutClick(): void {
-    this.logoutClickEvent.emit();
+  ngOnInit(): void {
+    this.router.events.subscribe((data) => {
+      if (data instanceof RoutesRecognized) {
+        const routeData = data?.state?.root?.firstChild?.data;
+        this.minHeader = routeData?.['minHeader'] ? true : false;
+      }
+    });
   }
 }

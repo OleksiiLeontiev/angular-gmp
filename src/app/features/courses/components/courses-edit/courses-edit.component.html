@@ -1,0 +1,70 @@
+<div class="courses-edit">
+  <h1 class="courses-edit__title">{{ pageTitle }}</h1>
+
+  <app-input
+    label="Title"
+    type="text"
+    name="title"
+    placeholder="Text input"
+    ngDefaultControl
+    [required]="true"
+    [(inputModel)]="course.title"
+  ></app-input>
+
+  <app-input
+    label="Description"
+    type="textarea"
+    name="description"
+    placeholder="Description"
+    ngDefaultControl
+    [required]="true"
+    [(inputModel)]="course.description"
+  ></app-input>
+
+  <app-input
+    label="Date"
+    type="text"
+    name="date"
+    size="small"
+    placeholder="MM/DD/YYYY"
+    ngDefaultControl
+    [required]="true"
+    [(inputModel)]="course.creationDate"
+  ></app-input>
+
+  <app-input
+    label="Duration"
+    type="number"
+    name="duration"
+    size="small"
+    placeholder="minutes"
+    ngDefaultControl
+    [required]="true"
+    [(inputModel)]="course.duration"
+  ></app-input>
+
+  <app-input
+    label="Authors"
+    type="text"
+    name="authors"
+    size="medium"
+    placeholder="Start typing"
+    ngDefaultControl
+    [required]="true"
+    [(inputModel)]="authors"
+  ></app-input>
+
+  <div class="courses-edit__button-box">
+    <app-button
+      class="courses-edit__button"
+      text="Cancel"
+      type="grey"
+      routerLink="/courses"
+    ></app-button>
+    <app-button
+      class="courses-edit__button"
+      text="Save"
+      (click)="onSave()"
+    ></app-button>
+  </div>
+</div>

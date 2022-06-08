@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/core/services';
 
 @Component({
@@ -10,7 +11,10 @@ export class LoginComponent implements OnInit {
   public emailValue: string = '';
   public passwordValue: string = '';
 
-  constructor(private authorizationService: AuthorizationService) {}
+  constructor(
+    private authorizationService: AuthorizationService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
@@ -19,5 +23,6 @@ export class LoginComponent implements OnInit {
       email: this.emailValue,
       password: this.passwordValue,
     });
+    this.router.navigate(['/']);
   }
 }

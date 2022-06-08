@@ -1,4 +1,15 @@
-<button [ngClass]="[type, size]" class="mybutton" type="button">
+<a
+  *ngIf="routerLink; else button"
+  [routerLink]="routerLink"
+  [ngClass]="[type, size]"
+  class="mybutton"
+>
   <span class="mybutton__icon material-icons" *ngIf="icon">{{ icon }}</span>
   <span *ngIf="text" class="mybutton__text">{{ text }}</span>
-</button>
+</a>
+<ng-template #button>
+  <button [ngClass]="[type, size]" class="mybutton" type="button">
+    <span class="mybutton__icon material-icons" *ngIf="icon">{{ icon }}</span>
+    <span *ngIf="text" class="mybutton__text">{{ text }}</span>
+  </button>
+</ng-template>

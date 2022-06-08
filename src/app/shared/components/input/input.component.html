@@ -1,0 +1,24 @@
+<div class="input-box" [ngClass]="[size]">
+  <label for="email" class="input-label flex">
+    <span class="input-label__title">{{ label }}:</span>
+    <span class="input-label__required" *ngIf="required">* required</span>
+  </label>
+  <textarea
+    *ngIf="type === 'textarea'; else input"
+    [(ngModel)]="inputModel"
+    (ngModelChange)="inputModelChange.emit(inputModel)"
+    [name]="name"
+    [placeholder]="placeholder"
+    class="input"
+  ></textarea>
+  <ng-template #input>
+    <input
+      [(ngModel)]="inputModel"
+      (ngModelChange)="inputModelChange.emit(inputModel)"
+      [type]="type"
+      [name]="name"
+      [placeholder]="placeholder"
+      class="input"
+    />
+  </ng-template>
+</div>

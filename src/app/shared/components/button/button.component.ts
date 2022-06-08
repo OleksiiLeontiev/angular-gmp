@@ -7,13 +7,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ButtonComponent implements OnInit {
   @Input()
+  public routerLink: string = '';
+
+  @Input()
   public text: string = '';
 
   @Input()
   public icon: string = '';
 
   @Input()
-  public type: 'primary' | 'secondary' | 'text-button' = 'primary';
+  public type: 'primary' | 'secondary' | 'text-button' | 'grey' = 'primary';
 
   @Input()
   public size: 'small' | 'medium' = 'medium';

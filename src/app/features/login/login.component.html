@@ -1,25 +1,22 @@
 <div class="login flex">
   <div class="login__card">
     <h1 class="login__title">Login</h1>
-    <div class="input-box">
-      <label for="email" class="input-label flex">
-        <span class="input-label__title">Email:</span>
-        <span class="input-label__required">* required</span>
-      </label>
-      <input [(ngModel)]="emailValue" type="email" name="email" class="input" />
-    </div>
-    <div class="input-box">
-      <label for="password" class="input-label flex">
-        <span class="input-label__title">Password:</span>
-        <span class="input-label__required">* required</span>
-      </label>
-      <input
-        [(ngModel)]="passwordValue"
-        type="password"
-        name="password"
-        class="input"
-      />
-    </div>
+    <app-input
+      label="Email"
+      type="email"
+      name="email"
+      ngDefaultControl
+      [required]="true"
+      [(ngModel)]="emailValue"
+    ></app-input>
+    <app-input
+      label="Password"
+      type="password"
+      name="password"
+      ngDefaultControl
+      [required]="true"
+      [(ngModel)]="passwordValue"
+    ></app-input>
     <div class="login__bottom flex">
       <a href="#" class="login__forgot-password">Forgot password</a>
       <app-button

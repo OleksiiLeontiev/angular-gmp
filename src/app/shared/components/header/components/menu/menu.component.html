@@ -1,11 +1,11 @@
 <div class="menu">
   <app-button
     *ngIf="!isAuthenticated()"
+    routerLink="/login"
     type="text-button"
     class="menu__item"
     text="User login"
     icon="person"
-    (click)="onLoginClick()"
   ></app-button>
   <app-button
     *ngIf="isAuthenticated()"

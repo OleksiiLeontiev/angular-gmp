@@ -13,7 +13,8 @@ body {
   padding-bottom: 60px;
   box-sizing: border-box;
 }
-input {
+input, textarea {
+  font-family: "SourceSansPro-Regular", Roboto, "Helvetica Neue", sans-serif;
   border-radius: 3px;
   border: 1px solid #ced0db;
   background: #ffffff;
@@ -21,6 +22,9 @@ input {
   font-size: 14px;
   line-height: 18px;
   padding: 8px 12px;
+}
+textarea {
+  min-height: 76px;
 }
 .container {
   width: 100%;
