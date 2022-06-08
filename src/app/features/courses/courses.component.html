@@ -11,7 +11,7 @@
       ></app-button>
     </div>
     <app-courses-list
-      *ngIf="getCourses().length; else not_found"
+      *ngIf="coursesLength; else not_found"
       [courses]="getCourses() | filter: searchValue | orderBy"
     ></app-courses-list>
 

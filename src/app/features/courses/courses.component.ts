@@ -9,14 +9,15 @@ import { Course } from './models/course';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit {
-  // public courses: Course[] = [];
   public searchValue: string = '';
+
+  get coursesLength(): number {
+    return this.getCourses().length;
+  }
 
   constructor(private coursesService: CoursesService) {}
 
-  ngOnInit(): void {
-    // this.courses = this.coursesService.getCoursesList();
-  }
+  ngOnInit(): void {}
 
   getCourses() {
     return this.coursesService.getCoursesList();
