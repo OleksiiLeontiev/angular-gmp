@@ -1,4 +1,8 @@
-<app-header></app-header>
-<app-breadcrumbs></app-breadcrumbs>
-<app-courses></app-courses>
+<app-header
+  (loginClickEvent)="onLoginClick()"
+  (logoutClickEvent)="onLogoutClick()"
+  [minHeader]="showLoginForm()"
+></app-header>
+<app-courses *ngIf="!showLoginForm()"></app-courses>
+<app-login *ngIf="showLoginForm()"></app-login>
 <app-footer></app-footer>

@@ -1,6 +1,11 @@
 <header class="header" id="header">
   <div class="header__container container flex">
     <app-logo></app-logo>
-    <app-menu></app-menu>
+    <app-menu
+      *ngIf="!minHeader"
+      (loginClickEvent)="onLoginClick()"
+      (logoutClickEvent)="onLogoutClick()"
+    ></app-menu>
   </div>
 </header>
+<app-breadcrumbs *ngIf="!minHeader"></app-breadcrumbs>

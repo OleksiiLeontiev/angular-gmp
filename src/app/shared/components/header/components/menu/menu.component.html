@@ -1,14 +1,18 @@
 <div class="menu">
   <app-button
+    *ngIf="!isAuthenticated()"
     type="text-button"
     class="menu__item"
     text="User login"
     icon="person"
+    (click)="onLoginClick()"
   ></app-button>
   <app-button
+    *ngIf="isAuthenticated()"
     type="text-button"
     class="menu__item"
     text="Log off"
     icon="logout"
+    (click)="onLogoutClick()"
   ></app-button>
 </div>

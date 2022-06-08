@@ -4,8 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { CoursesModule } from './features';
-import { HeaderModule, FooterModule, BreadcrumbsModule } from './shared';
+import { CoursesModule, LoginModule } from './features';
+import { HeaderModule, FooterModule } from './shared';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { HeaderModule, FooterModule, BreadcrumbsModule } from './shared';
     CoursesModule,
     HeaderModule,
     FooterModule,
-    BreadcrumbsModule,
+    LoginModule,
   ],
   declarations: [AppComponent],
   providers: [],

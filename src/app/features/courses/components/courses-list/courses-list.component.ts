@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CoursesService } from '../../courses.service';
 import { Course } from '../../models/course';
 
 @Component({
@@ -10,7 +11,7 @@ export class CoursesListComponent implements OnInit {
   @Input()
   public courses: Course[] = [];
 
-  constructor() {}
+  constructor(private coursesService: CoursesService) {}
 
   ngOnInit(): void {}
 
@@ -19,10 +20,15 @@ export class CoursesListComponent implements OnInit {
   }
 
   deleteCourse(course: Course) {
-    console.log(`delete id=${course.id}`);
+    const deleteConfirm = confirm(`Delete ${course.title}?`);
+    if (deleteConfirm) {
+      this.coursesService.removeCourse(course.id);
+      console.log(`delete id=${course.id}`);
+    }
   }
 
   editCourse(course: Course) {
+    this.coursesService.updateCourse(course);
     console.log(`edit id=${course.id}`);
   }
 
