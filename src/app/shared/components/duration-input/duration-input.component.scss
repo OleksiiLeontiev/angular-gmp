@@ -1,0 +1,10 @@
+.duration-input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &__converted {
+    margin-left: 40px;
+    margin-top: 20px;
+  }
+}

@@ -42,6 +42,10 @@ export class CoursesEditComponent implements OnInit {
     });
   }
 
+  onDurationChange($event: any) {
+    this.course.duration = $event;
+  }
+
   onSave() {
     if (this.operationType === 'edit') {
       this.coursesService.updateCourse(this.course);

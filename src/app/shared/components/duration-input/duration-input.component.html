@@ -1,1 +1,15 @@
-<p>duration-input works!</p>
+<div class="duration-input">
+  <app-input
+    [label]="label"
+    type="number"
+    [name]="name"
+    size="small"
+    [placeholder]="placeholder"
+    [required]="required"
+    [(inputModel)]="inputModel"
+    (inputModelChange)="onInputChange($event)"
+  ></app-input>
+  <div class="duration-input__converted">
+    {{ inputModel | time }}
+  </div>
+</div>

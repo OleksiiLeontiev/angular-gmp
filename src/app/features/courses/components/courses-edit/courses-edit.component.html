@@ -6,7 +6,6 @@
     type="text"
     name="title"
     placeholder="Text input"
-    ngDefaultControl
     [required]="true"
     [(inputModel)]="course.title"
   ></app-input>
@@ -16,7 +15,6 @@
     type="textarea"
     name="description"
     placeholder="Description"
-    ngDefaultControl
     [required]="true"
     [(inputModel)]="course.description"
   ></app-input>
@@ -27,21 +25,18 @@
     name="date"
     size="small"
     placeholder="MM/DD/YYYY"
-    ngDefaultControl
     [required]="true"
     [(inputModel)]="course.creationDate"
   ></app-input>
 
-  <app-input
+  <app-duration-input
     label="Duration"
-    type="number"
     name="duration"
-    size="small"
     placeholder="minutes"
-    ngDefaultControl
     [required]="true"
-    [(inputModel)]="course.duration"
-  ></app-input>
+    [inputModel]="course.duration"
+    (inputModelChange)="onDurationChange($event)"
+  ></app-duration-input>
 
   <app-input
     label="Authors"
@@ -49,7 +44,6 @@
     name="authors"
     size="medium"
     placeholder="Start typing"
-    ngDefaultControl
     [required]="true"
     [(inputModel)]="authors"
   ></app-input>

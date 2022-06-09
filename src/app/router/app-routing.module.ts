@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CoursesComponent, LoginComponent } from '../features';
+import { LoginComponent } from '../features';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, data: { minHeader: true } },
