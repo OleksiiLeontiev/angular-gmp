@@ -1,9 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => InputComponent),
+    },
+  ],
 })
 export class InputComponent implements OnInit {
   @Input()
@@ -25,12 +33,19 @@ export class InputComponent implements OnInit {
   public required: boolean = false;
 
   @Input()
-  public inputModel: any = '';
+  public formControlName: any;
 
-  @Output()
-  public inputModelChange = new EventEmitter<typeof this.inputModel>();
+  public inputFormGroup: any;
 
-  constructor() {}
+  constructor(private controlContainer: ControlContainer) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.controlContainer && this.formControlName) {
+      this.inputFormGroup = this.controlContainer.control;
+    }
+  }
+
+  registerOnChange() {}
+  writeValue() {}
+  registerOnTouched() {}
 }

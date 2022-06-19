@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../courses.service';
 import { Course } from '../../models/course';
@@ -15,42 +16,42 @@ export class CoursesEditComponent implements OnInit {
     return this.operationType === 'edit' ? 'Edit Course' : 'New Course';
   }
 
-  public course: Course = {
+  public courseForm: FormGroup = this.fb.group({
     id: Date.now(),
     title: '',
     description: '',
     duration: 60,
     creationDate: '',
     topRated: false,
-  };
-
-  public authors: string = '';
+    authors: '',
+  });
 
   constructor(
     private coursesService: CoursesService,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    const courseId = this.route.snapshot.params['id'];
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      if (params['id']) {
-        const currentCourse = this.coursesService.getCourseById(+params['id']);
-        if (currentCourse) this.course = currentCourse;
-        this.operationType = 'edit';
-      }
-    });
+    if (courseId) {
+      const currentCourse = this.coursesService.getCourseById(+courseId);
+      if (currentCourse)
+        this.courseForm.setValue({
+          ...currentCourse,
+          authors: '',
+        });
+      this.operationType = 'edit';
+    }
   }
 
-  onDurationChange($event: any) {
-    this.course.duration = $event;
-  }
+  ngOnInit(): void {}
 
   onSave() {
     if (this.operationType === 'edit') {
-      this.coursesService.updateCourse(this.course);
+      this.coursesService.updateCourse(this.courseForm.value);
     } else {
-      this.coursesService.createCourse(this.course);
+      this.coursesService.createCourse(this.courseForm.value);
     }
     this.router.navigate(['/courses']);
   }

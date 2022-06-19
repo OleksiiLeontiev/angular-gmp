@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-duration-input',
   templateUrl: './duration-input.component.html',
   styleUrls: ['./duration-input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => DurationInputComponent),
+    },
+  ],
 })
 export class DurationInputComponent implements OnInit {
   @Input()
@@ -19,16 +26,19 @@ export class DurationInputComponent implements OnInit {
   public required: boolean = false;
 
   @Input()
-  public inputModel: any = '';
+  public formControlName: any;
 
-  @Output()
-  public inputModelChange = new EventEmitter<typeof this.inputModel>();
+  public durationFormGroup: any;
 
-  constructor() {}
+  constructor(private controlContainer: ControlContainer) {}
 
-  onInputChange($event: any) {
-    this.inputModelChange.emit($event);
+  ngOnInit(): void {
+    if (this.controlContainer && this.formControlName) {
+      this.durationFormGroup = this.controlContainer.control;
+    }
   }
 
-  ngOnInit(): void {}
+  registerOnChange() {}
+  writeValue() {}
+  registerOnTouched() {}
 }

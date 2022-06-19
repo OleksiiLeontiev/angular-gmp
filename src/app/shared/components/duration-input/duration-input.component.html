@@ -1,4 +1,4 @@
-<div class="duration-input">
+<div class="duration-input" [formGroup]="durationFormGroup">
   <app-input
     [label]="label"
     type="number"
@@ -6,10 +6,9 @@
     size="small"
     [placeholder]="placeholder"
     [required]="required"
-    [(inputModel)]="inputModel"
-    (inputModelChange)="onInputChange($event)"
+    [formControlName]="formControlName"
   ></app-input>
   <div class="duration-input__converted">
-    {{ inputModel | time }}
+    {{ durationFormGroup.value[formControlName] | time }}
   </div>
 </div>

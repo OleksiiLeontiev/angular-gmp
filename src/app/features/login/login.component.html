@@ -1,21 +1,19 @@
-<div class="login flex">
+<div class="login flex" [formGroup]="loginForm">
   <div class="login__card">
     <h1 class="login__title">Login</h1>
     <app-input
       label="Email"
       type="email"
       name="email"
-      ngDefaultControl
       [required]="true"
-      [(ngModel)]="emailValue"
+      formControlName="email"
     ></app-input>
     <app-input
       label="Password"
       type="password"
       name="password"
-      ngDefaultControl
       [required]="true"
-      [(ngModel)]="passwordValue"
+      formControlName="password"
     ></app-input>
     <div class="login__bottom flex">
       <a href="#" class="login__forgot-password">Forgot password</a>
