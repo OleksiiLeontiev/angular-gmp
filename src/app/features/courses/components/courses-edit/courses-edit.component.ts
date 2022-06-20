@@ -72,9 +72,7 @@ export class CoursesEditComponent {
 
     this.breadcrumbsData.push({
       title:
-        this.operationType === 'edit'
-          ? this.courseForm.value.title
-          : 'New course',
+        this.operationType === 'edit' ? courseForm.value.title : 'New course',
     });
 
     return courseForm;
