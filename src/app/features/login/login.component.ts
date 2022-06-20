@@ -8,7 +8,7 @@ import { AuthorizationService } from 'src/app/core/services';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   public loginForm: FormGroup = this.fb.group({
     email: '',
     password: '',
@@ -19,8 +19,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder
   ) {}
-
-  ngOnInit(): void {}
 
   onLogin() {
     this.authorizationService.login(this.loginForm.value);
