@@ -5,17 +5,18 @@ import { AppRoutingModule } from './router';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { CoursesModule, LoginModule } from './features';
-import { HeaderModule, FooterModule } from './shared';
+import { HeaderModule, FooterModule, NotfoundModule } from './shared';
 
 @NgModule({
   imports: [
     BrowserModule,
-    AppRoutingModule,
     CoreModule,
     CoursesModule,
     HeaderModule,
     FooterModule,
     LoginModule,
+    NotfoundModule,
+    AppRoutingModule,
   ],
   declarations: [AppComponent],
   providers: [],

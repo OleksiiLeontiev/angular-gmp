@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Breadcrumbs } from 'src/app/shared/models';
 import { CoursesService } from '../../courses.service';
 import { Course } from '../../models/course';
 
@@ -8,6 +9,12 @@ import { Course } from '../../models/course';
   styleUrls: ['./courses-list.component.scss'],
 })
 export class CoursesListComponent implements OnInit {
+  public breadcrumbsData: Breadcrumbs[] = [
+    {
+      title: 'Courses',
+    },
+  ];
+
   public searchValue: string = '';
 
   get coursesLength(): number {

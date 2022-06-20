@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header.component';
 import { LogoModule, MenuModule } from './components';
-import { BreadcrumbsModule } from '../breadcrumbs';
 
 @NgModule({
-  imports: [CommonModule, LogoModule, MenuModule, BreadcrumbsModule],
+  imports: [CommonModule, LogoModule, MenuModule],
   declarations: [HeaderComponent],
   exports: [HeaderComponent],
 })

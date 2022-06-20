@@ -1,5 +1,17 @@
 <div class="breadcrumbs">
   <div class="breadcrumbs__container container flex">
-    <p class="breadcrumbs__link">Courses</p>
+    <div
+      class="breadcrumbs__item flex"
+      *ngFor="
+        let breadcrumb of breadcrumbsItems;
+        let i = index;
+        trackBy: identify
+      "
+    >
+      <span *ngIf="i" class="breadcrumbs__delimeter">/</span>
+      <a [routerLink]="breadcrumb.link" class="breadcrumbs__link">
+        {{ breadcrumb.title }}
+      </a>
+    </div>
   </div>
 </div>
