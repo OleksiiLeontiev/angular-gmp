@@ -8,8 +8,11 @@ import { Course } from '../../models/course';
   styleUrls: ['./courses-list.component.scss'],
 })
 export class CoursesListComponent implements OnInit {
-  @Input()
-  public courses: Course[] = [];
+  public searchValue: string = '';
+
+  get coursesLength(): number {
+    return this.getCourses().length;
+  }
 
   constructor(private coursesService: CoursesService) {}
 
@@ -34,5 +37,13 @@ export class CoursesListComponent implements OnInit {
 
   identify(index: number, item: any): string {
     return item.id;
+  }
+
+  getCourses() {
+    return this.coursesService.getCoursesList();
+  }
+
+  onSearch(value: string) {
+    this.searchValue = value;
   }
 }

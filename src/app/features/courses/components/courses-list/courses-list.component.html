@@ -1,6 +1,22 @@
-<div class="courses-list">
+<app-courses-search (searchValueChange)="onSearch($event)"></app-courses-search>
+<div class="courses-list__add flex">
+  <app-button
+    routerLink="/courses/add"
+    type="secondary"
+    text="Add course"
+    icon="add_circle_outline"
+  ></app-button>
+</div>
+<!-- <app-courses-list
+  
+  [courses]=""
+></app-courses-list> -->
+<div class="courses-list" *ngIf="coursesLength; else not_found">
   <app-courses-item
-    *ngFor="let course of courses; trackBy: identify"
+    *ngFor="
+      let course of getCourses() | filter: searchValue | orderBy;
+      trackBy: identify
+    "
     [course]="course"
     (deleteEvent)="deleteCourse(course)"
     (editEvent)="editCourse(course)"
@@ -10,3 +26,9 @@
     <a class="courses-list__more_link" (click)="loadMoreClick()">Load more</a>
   </div>
 </div>
+
+<ng-template #not_found>
+  <div class="courses-list__not_found">
+    There are no courses yet. Feel free to add new courses.
+  </div>
+</ng-template>

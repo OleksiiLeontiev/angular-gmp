@@ -1,19 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoursesComponent } from './courses.component';
-import { CoursesListModule, CoursesSearchModule } from './components';
-import { ButtonModule } from 'src/app/shared';
-import { FilterModule, OrderByModule } from './pipes';
+import { CoursesRoutingModule } from './router';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoursesSearchModule,
-    CoursesListModule,
-    ButtonModule,
-    OrderByModule,
-    FilterModule,
-  ],
+  imports: [CommonModule, CoursesRoutingModule],
   declarations: [CoursesComponent],
   exports: [CoursesComponent],
 })

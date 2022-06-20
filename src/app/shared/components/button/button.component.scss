@@ -13,6 +13,7 @@
   text-align: center;
   border-radius: 3px;
   cursor: pointer;
+  text-decoration: none;
 
   &__icon {
     margin-right: 8px;
@@ -36,6 +37,10 @@
   }
   &.secondary {
     background-color: #009ecc;
+  }
+  &.grey {
+    color: #5b616f;
+    background-color: #d0d0d2;
   }
   &.small {
     height: 24px;

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login.component';
+import { CoursesEditComponent } from './courses-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule, InputModule } from 'src/app/shared';
+import { ButtonModule, DurationInputModule, InputModule } from 'src/app/shared';
 
 @NgModule({
   imports: [
@@ -10,9 +10,10 @@ import { ButtonModule, InputModule } from 'src/app/shared';
     FormsModule,
     ButtonModule,
     InputModule,
+    DurationInputModule,
     ReactiveFormsModule,
   ],
-  declarations: [LoginComponent],
-  exports: [LoginComponent],
+  declarations: [CoursesEditComponent],
+  exports: [CoursesEditComponent],
 })
-export class LoginModule {}
+export class CoursesEditModule {}

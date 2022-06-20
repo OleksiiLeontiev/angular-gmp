@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/core/services';
 
 @Component({
@@ -6,18 +8,20 @@ import { AuthorizationService } from 'src/app/core/services';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
-  public emailValue: string = '';
-  public passwordValue: string = '';
+export class LoginComponent {
+  public loginForm: FormGroup = this.fb.group({
+    email: '',
+    password: '',
+  });
 
-  constructor(private authorizationService: AuthorizationService) {}
-
-  ngOnInit(): void {}
+  constructor(
+    private authorizationService: AuthorizationService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {}
 
   onLogin() {
-    this.authorizationService.login({
-      email: this.emailValue,
-      password: this.passwordValue,
-    });
+    this.authorizationService.login(this.loginForm.value);
+    this.router.navigate(['/']);
   }
 }

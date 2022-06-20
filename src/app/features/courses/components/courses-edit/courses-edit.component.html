@@ -1,0 +1,62 @@
+<div class="courses-edit" [formGroup]="courseForm">
+  <h1 class="courses-edit__title">{{ pageTitle }}</h1>
+  <app-input
+    label="Title"
+    type="text"
+    name="title"
+    placeholder="Text input"
+    [required]="true"
+    formControlName="title"
+  ></app-input>
+
+  <app-input
+    label="Description"
+    type="textarea"
+    name="description"
+    placeholder="Description"
+    [required]="true"
+    formControlName="description"
+  ></app-input>
+
+  <app-input
+    label="Date"
+    type="text"
+    name="date"
+    size="small"
+    placeholder="MM/DD/YYYY"
+    [required]="true"
+    formControlName="creationDate"
+  ></app-input>
+
+  <app-duration-input
+    label="Duration"
+    name="duration"
+    placeholder="minutes"
+    [required]="true"
+    formControlName="duration"
+  ></app-duration-input>
+
+  <app-input
+    label="Authors"
+    type="text"
+    name="authors"
+    size="medium"
+    placeholder="Start typing"
+    [required]="true"
+    formControlName="authors"
+  ></app-input>
+
+  <div class="courses-edit__button-box">
+    <app-button
+      class="courses-edit__button"
+      text="Cancel"
+      type="grey"
+      routerLink="/courses"
+    ></app-button>
+    <app-button
+      class="courses-edit__button"
+      text="Save"
+      (click)="onSave()"
+    ></app-button>
+  </div>
+</div>

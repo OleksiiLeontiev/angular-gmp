@@ -1,0 +1,22 @@
+<div class="input-box" [ngClass]="[size]" [formGroup]="inputFormGroup">
+  <label for="email" class="input-label flex">
+    <span class="input-label__title">{{ label }}:</span>
+    <span class="input-label__required" *ngIf="required">* required</span>
+  </label>
+  <textarea
+    *ngIf="type === 'textarea'; else input"
+    [formControlName]="formControlName"
+    [name]="name"
+    [placeholder]="placeholder"
+    class="input"
+  ></textarea>
+  <ng-template #input>
+    <input
+      [formControlName]="formControlName"
+      [type]="type"
+      [name]="name"
+      [placeholder]="placeholder"
+      class="input"
+    />
+  </ng-template>
+</div>
