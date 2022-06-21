@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoursesListComponent } from './courses-list.component';
 import { CoursesItemModule } from './components';
-import { ButtonModule } from 'src/app/shared';
+import { BreadcrumbsModule, ButtonModule } from 'src/app/shared';
 import { OrderByModule, FilterModule } from '../../pipes';
 import { CoursesSearchModule } from './components/courses-search';
 
@@ -14,6 +14,7 @@ import { CoursesSearchModule } from './components/courses-search';
     ButtonModule,
     OrderByModule,
     FilterModule,
+    BreadcrumbsModule,
   ],
   declarations: [CoursesListComponent],
   exports: [CoursesListComponent],

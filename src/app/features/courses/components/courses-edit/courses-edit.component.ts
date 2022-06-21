@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Breadcrumbs } from 'src/app/shared/models';
 import { CoursesService } from '../../courses.service';
 import { Course } from '../../models/course';
 
@@ -11,6 +12,13 @@ import { Course } from '../../models/course';
 })
 export class CoursesEditComponent {
   private operationType: 'edit' | 'create' = 'create';
+
+  public breadcrumbsData: Breadcrumbs[] = [
+    {
+      title: 'Courses',
+      link: '/courses',
+    },
+  ];
 
   get pageTitle(): string {
     return this.operationType === 'edit' ? 'Edit Course' : 'New Course';
@@ -38,26 +46,35 @@ export class CoursesEditComponent {
   }
 
   createForm(courseId: number): FormGroup {
+    let courseForm!: FormGroup;
+
     if (courseId) {
       const currentCourse = this.coursesService.getCourseById(+courseId);
       if (currentCourse) {
         this.operationType = 'edit';
 
-        return this.fb.group({
+        courseForm = this.fb.group({
           ...currentCourse,
           authors: '',
         });
       }
+    } else {
+      courseForm = this.fb.group({
+        id: Date.now(),
+        title: '',
+        description: '',
+        duration: 60,
+        creationDate: '',
+        topRated: false,
+        authors: '',
+      });
     }
 
-    return this.fb.group({
-      id: Date.now(),
-      title: '',
-      description: '',
-      duration: 60,
-      creationDate: '',
-      topRated: false,
-      authors: '',
+    this.breadcrumbsData.push({
+      title:
+        this.operationType === 'edit' ? courseForm.value.title : 'New course',
     });
+
+    return courseForm;
   }
 }
