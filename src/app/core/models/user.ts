@@ -1,6 +1,12 @@
 export interface User {
   id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
+  token: string;
+  name: UserName;
+  login: string;
+  password: string;
+}
+
+export interface UserName {
+  first: string;
+  last: string;
 }

@@ -3,29 +3,47 @@ import { Course } from '../models/course';
 export const COURSES: Course[] = [
   {
     id: 1,
-    title: 'Video Course 1. English course',
-    creationDate: '05/28/2022',
-    duration: 88,
+    name: 'Video Course 1. English course',
+    date: '05/28/2022',
+    length: 88,
     description:
       "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-    topRated: true,
+    isTopRated: true,
+    authors: [
+      {
+        id: '1',
+        name: 'Alex',
+      },
+    ],
   },
   {
     id: 2,
-    title: 'Video Course 2. English grammar',
-    creationDate: '05/20/2022',
-    duration: 68,
+    name: 'Video Course 2. English grammar',
+    date: '05/20/2022',
+    length: 68,
     description:
       "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-    topRated: false,
+    isTopRated: false,
+    authors: [
+      {
+        id: '1',
+        name: 'Alex',
+      },
+    ],
   },
   {
     id: 3,
-    title: 'Video Course 3. Angular course',
-    creationDate: '08/28/2020',
-    duration: 45,
+    name: 'Video Course 3. Angular course',
+    date: '08/28/2020',
+    length: 45,
     description:
       "Learn about where you can find course descriptions, what information they include, how they work, and details about various components of a course description. Course descriptions report information about a university or college's classes. They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions for all courses offered during a particular semester.",
-    topRated: true,
+    isTopRated: true,
+    authors: [
+      {
+        id: '1',
+        name: 'Alex',
+      },
+    ],
   },
 ];

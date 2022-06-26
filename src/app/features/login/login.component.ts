@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthorizationService } from 'src/app/core/services';
 
 @Component({
@@ -8,11 +9,13 @@ import { AuthorizationService } from 'src/app/core/services';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   public loginForm: FormGroup = this.fb.group({
-    email: '',
+    login: '',
     password: '',
   });
+
+  private sub!: Subscription;
 
   constructor(
     private authorizationService: AuthorizationService,
@@ -21,7 +24,14 @@ export class LoginComponent {
   ) {}
 
   onLogin() {
-    this.authorizationService.login(this.loginForm.value);
-    this.router.navigate(['/']);
+    this.sub = this.authorizationService
+      .login(this.loginForm.value)
+      .subscribe(() => {
+        this.router.navigate(['/']);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

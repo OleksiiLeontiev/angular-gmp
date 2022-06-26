@@ -1,13 +1,13 @@
 <div
   class="courses-list__item"
-  [ngClass]="{ 'top-rated': course.topRated }"
-  [appHighlight]="course.creationDate"
+  [ngClass]="{ 'top-rated': course.isTopRated }"
+  [appHighlight]="course.date"
 >
   <div class="courses-list__item_top flex">
     <h2 class="courses-list__item_title">
-      {{ course.title | uppercase }}
+      {{ course.name | uppercase }}
       <span
-        *ngIf="course.topRated"
+        *ngIf="course.isTopRated"
         class="courses-list__item_icon material-icons"
         >star</span
       >
@@ -17,13 +17,13 @@
         <span class="courses-list__item_meta-icon material-icons"
           >query_builder</span
         >
-        {{ course.duration | time }}
+        {{ course.length | time }}
       </div>
       <div class="courses-list__item_meta">
         <span class="courses-list__item_meta-icon material-icons"
           >calendar_today</span
         >
-        {{ course.creationDate | date: "dd MMM yyyy" }}
+        {{ course.date | date: "dd MMM yyyy" }}
       </div>
     </div>
   </div>
