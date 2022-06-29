@@ -16,23 +16,35 @@ export class CoursesListComponent implements OnInit {
   ];
 
   public searchValue: string = '';
+  public courses: Course[] = [];
+
+  private loadMoreIndex: number = 3;
 
   get coursesLength(): number {
-    return this.getCourses().length;
+    return this.courses.length;
   }
 
   constructor(private coursesService: CoursesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.courses = this.getCourses();
+  }
 
-  loadMoreClick() {
-    console.log('Load more');
+  async loadMoreClick() {
+    this.coursesService
+      .getCoursesList(this.loadMoreIndex, 1, this.searchValue)
+      .subscribe((data: Course[]) => {
+        this.courses.push(...data);
+        this.loadMoreIndex += 1;
+      });
   }
 
   deleteCourse(course: Course) {
-    const deleteConfirm = confirm(`Delete ${course.title}?`);
+    const deleteConfirm = confirm(`Delete ${course.name}?`);
     if (deleteConfirm) {
-      this.coursesService.removeCourse(course.id);
+      this.coursesService.removeCourse(course.id).subscribe(() => {
+        this.courses = this.getCourses();
+      });
       console.log(`delete id=${course.id}`);
     }
   }
@@ -47,10 +59,17 @@ export class CoursesListComponent implements OnInit {
   }
 
   getCourses() {
-    return this.coursesService.getCoursesList();
+    const courses: Course[] = [];
+    this.coursesService
+      .getCoursesList(0, 3, this.searchValue)
+      .subscribe((data: Course[]) => {
+        courses.push(...data);
+      });
+    return courses;
   }
 
   onSearch(value: string) {
     this.searchValue = value;
+    this.courses = this.getCourses();
   }
 }

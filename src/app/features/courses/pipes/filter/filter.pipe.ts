@@ -10,7 +10,7 @@ export class FilterPipe implements PipeTransform {
 
     return items.filter(
       (item) =>
-        item.title.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
+        item.name.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
     );
   }
 }

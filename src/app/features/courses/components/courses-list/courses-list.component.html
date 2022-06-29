@@ -13,10 +13,7 @@
   </div>
   <div class="courses-list" *ngIf="coursesLength; else not_found">
     <app-courses-item
-      *ngFor="
-        let course of getCourses() | filter: searchValue | orderBy;
-        trackBy: identify
-      "
+      *ngFor="let course of courses | orderBy; trackBy: identify"
       [course]="course"
       (deleteEvent)="deleteCourse(course)"
       (editEvent)="editCourse(course)"

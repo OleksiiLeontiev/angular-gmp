@@ -1,4 +1,8 @@
 export interface LoginForm {
-  email: string;
+  login: string;
   password: string;
+}
+
+export interface Token {
+  token: string;
 }

@@ -1,28 +1,36 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginForm } from '../models/authorization';
-import { User } from '../models/user';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const fakeUser: User = {
-  id: 1,
-  firstName: 'FirstName',
-  lastName: 'LastName',
-  email: '',
-};
+import { LoginForm, Token } from '../models/authorization';
+import { User } from '../models/user';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationService {
-  public isAuth: boolean = !!localStorage.getItem('accessToken');
-  constructor(private router: Router) {}
+  private apiUrl = 'http://localhost:3004/auth';
+  private isAuth: boolean = !!localStorage.getItem('accessToken');
 
-  login(loginFormData: LoginForm): void {
-    fakeUser.email = loginFormData.email;
-    const userInfo = JSON.stringify(fakeUser);
-    localStorage.setItem('accessToken', 'fakeToken');
-    localStorage.setItem('userInfo', userInfo);
-    this.isAuth = true;
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
+  constructor(private router: Router, private http: HttpClient) {}
+
+  login(loginFormData: LoginForm): Observable<Token> {
+    return this.http
+      .post<Token>(`${this.apiUrl}/login`, loginFormData, this.httpOptions)
+      .pipe(
+        tap((data: Token) => {
+          localStorage.setItem('accessToken', data.token);
+          this.isAuth = true;
+        }),
+        catchError(() =>
+          throwError(() => new Error('Login failed. Please try again later.'))
+        )
+      );
   }
   logout(): void {
     localStorage.removeItem('accessToken');
@@ -33,7 +41,17 @@ export class AuthorizationService {
   isAuthenticated(): boolean {
     return this.isAuth;
   }
-  getUserInfo(): User {
-    return JSON.parse(localStorage.getItem('userInfo') || '{}');
+
+  getUserInfo(): Observable<User> {
+    const token = localStorage.getItem('accessToken');
+    return this.http
+      .post<User>(`${this.apiUrl}/userinfo`, token, this.httpOptions)
+      .pipe(
+        catchError(() =>
+          throwError(
+            () => new Error('getUserInfo failed. Please try again later.')
+          )
+        )
+      );
   }
 }

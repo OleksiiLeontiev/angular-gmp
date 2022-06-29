@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/core/services';
@@ -10,7 +10,7 @@ import { AuthorizationService } from 'src/app/core/services';
 })
 export class LoginComponent {
   public loginForm: FormGroup = this.fb.group({
-    email: '',
+    login: '',
     password: '',
   });
 
@@ -21,7 +21,8 @@ export class LoginComponent {
   ) {}
 
   onLogin() {
-    this.authorizationService.login(this.loginForm.value);
-    this.router.navigate(['/']);
+    this.authorizationService.login(this.loginForm.value).subscribe(() => {
+      this.router.navigate(['/']);
+    });
   }
 }
