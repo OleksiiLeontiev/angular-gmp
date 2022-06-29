@@ -11,9 +11,9 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 })
 export class AuthorizationService {
   private apiUrl = 'http://localhost:3004/auth';
-  public isAuth: boolean = !!localStorage.getItem('accessToken');
+  private isAuth: boolean = !!localStorage.getItem('accessToken');
 
-  httpOptions = {
+  private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
@@ -27,11 +27,9 @@ export class AuthorizationService {
           localStorage.setItem('accessToken', data.token);
           this.isAuth = true;
         }),
-        catchError(() => {
-          return throwError(
-            () => new Error('Login failed. Please try again later.')
-          );
-        })
+        catchError(() =>
+          throwError(() => new Error('Login failed. Please try again later.'))
+        )
       );
   }
   logout(): void {
@@ -49,11 +47,11 @@ export class AuthorizationService {
     return this.http
       .post<User>(`${this.apiUrl}/userinfo`, token, this.httpOptions)
       .pipe(
-        catchError(() => {
-          return throwError(
+        catchError(() =>
+          throwError(
             () => new Error('getUserInfo failed. Please try again later.')
-          );
-        })
+          )
+        )
       );
   }
 }

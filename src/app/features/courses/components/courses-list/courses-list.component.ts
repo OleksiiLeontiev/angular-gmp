@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Breadcrumbs } from 'src/app/shared/models';
 import { CoursesService } from '../../courses.service';
 import { Course } from '../../models/course';
@@ -9,7 +8,7 @@ import { Course } from '../../models/course';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
 })
-export class CoursesListComponent implements OnInit, OnDestroy {
+export class CoursesListComponent implements OnInit {
   public breadcrumbsData: Breadcrumbs[] = [
     {
       title: 'Courses',
@@ -20,7 +19,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: Course[] = [];
 
   private loadMoreIndex: number = 3;
-  private subs: Subscription[] = [];
 
   get coursesLength(): number {
     return this.courses.length;
@@ -33,24 +31,20 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   async loadMoreClick() {
-    this.subs.push(
-      this.coursesService
-        .getCoursesList(this.loadMoreIndex, 1, this.searchValue)
-        .subscribe((data: Course[]) => {
-          this.courses.push(...data);
-          this.loadMoreIndex += 1;
-        })
-    );
+    this.coursesService
+      .getCoursesList(this.loadMoreIndex, 1, this.searchValue)
+      .subscribe((data: Course[]) => {
+        this.courses.push(...data);
+        this.loadMoreIndex += 1;
+      });
   }
 
   deleteCourse(course: Course) {
     const deleteConfirm = confirm(`Delete ${course.name}?`);
     if (deleteConfirm) {
-      this.subs.push(
-        this.coursesService.removeCourse(course.id).subscribe(() => {
-          this.courses = this.getCourses();
-        })
-      );
+      this.coursesService.removeCourse(course.id).subscribe(() => {
+        this.courses = this.getCourses();
+      });
       console.log(`delete id=${course.id}`);
     }
   }
@@ -66,22 +60,16 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   getCourses() {
     const courses: Course[] = [];
-    this.subs.push(
-      this.coursesService
-        .getCoursesList(0, 3, this.searchValue)
-        .subscribe((data: Course[]) => {
-          courses.push(...data);
-        })
-    );
+    this.coursesService
+      .getCoursesList(0, 3, this.searchValue)
+      .subscribe((data: Course[]) => {
+        courses.push(...data);
+      });
     return courses;
   }
 
   onSearch(value: string) {
     this.searchValue = value;
     this.courses = this.getCourses();
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }
