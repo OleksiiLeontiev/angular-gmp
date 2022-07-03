@@ -5,3 +5,4 @@ export * from './button';
 export * from './input';
 export * from './duration-input';
 export * from './notfound';
+export * from './loader';

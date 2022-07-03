@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/core/models';
 import { AuthorizationService } from 'src/app/core/services';
 
 @Component({
@@ -6,8 +8,14 @@ import { AuthorizationService } from 'src/app/core/services';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent implements OnInit {
-  constructor(private authorizationService: AuthorizationService) {}
+export class MenuComponent implements OnInit, OnDestroy {
+  public userName: string = '';
+  private sub!: Subscription;
+  constructor(private authorizationService: AuthorizationService) {
+    this.sub = this.authorizationService.userData.subscribe((data: User) => {
+      this.userName = `${data.name.first} ${data.name.last}`;
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -16,5 +24,9 @@ export class MenuComponent implements OnInit {
   }
   onLogoutClick(): void {
     this.authorizationService.logout();
+  }
+
+  ngOnDestroy(): void {
+    if (this.sub) this.sub.unsubscribe();
   }
 }

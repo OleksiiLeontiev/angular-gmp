@@ -1,10 +1,9 @@
 <div class="menu">
   <app-button
-    *ngIf="!isAuthenticated()"
-    routerLink="/login"
+    *ngIf="userName"
     type="text-button"
     class="menu__item"
-    text="User login"
+    [text]="userName"
     icon="person"
   ></app-button>
   <app-button

@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginForm, Token } from '../models/authorization';
 import { User } from '../models/user';
 import { catchError, Observable, tap, throwError } from 'rxjs';
+import { LoaderService } from '.';
 
 @Injectable({
   providedIn: 'root',
@@ -12,20 +13,32 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 export class AuthorizationService {
   private apiUrl = 'http://localhost:3004/auth';
   private isAuth: boolean = !!localStorage.getItem('accessToken');
+  public userData: Observable<User> = new Observable();
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private loaderService: LoaderService
+  ) {
+    if (this.isAuthenticated()) {
+      this.userData = this.getUserInfo();
+    }
+  }
 
   login(loginFormData: LoginForm): Observable<Token> {
+    this.loaderService.setLoading(true);
     return this.http
       .post<Token>(`${this.apiUrl}/login`, loginFormData, this.httpOptions)
       .pipe(
         tap((data: Token) => {
           localStorage.setItem('accessToken', data.token);
           this.isAuth = true;
+          this.userData = this.getUserInfo();
+          this.loaderService.setLoading(false);
         }),
         catchError(() =>
           throwError(() => new Error('Login failed. Please try again later.'))
@@ -45,7 +58,7 @@ export class AuthorizationService {
   getUserInfo(): Observable<User> {
     const token = localStorage.getItem('accessToken');
     return this.http
-      .post<User>(`${this.apiUrl}/userinfo`, token, this.httpOptions)
+      .post<User>(`${this.apiUrl}/userinfo`, { token }, this.httpOptions)
       .pipe(
         catchError(() =>
           throwError(

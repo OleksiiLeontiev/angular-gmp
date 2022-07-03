@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError, tap } from 'rxjs';
 
 import { Course } from './models/course';
+import { LoaderService } from 'src/app/core/services';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,15 @@ export class CoursesService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private loaderService: LoaderService) {}
 
   getCoursesList(
     start: number = 0,
     count: number = 3,
     textFragment: string = ''
   ): Observable<Course[]> {
+    this.loaderService.setLoading(true);
+
     return this.http
       .get<Course[]>(`${this.apiUrl}`, {
         ...this.httpOptions,
@@ -31,6 +34,9 @@ export class CoursesService {
         },
       })
       .pipe(
+        tap(() => {
+          this.loaderService.setLoading(false);
+        }),
         catchError(() =>
           throwError(
             () => new Error('getCoursesList failed. Please try again later.')
@@ -39,9 +45,14 @@ export class CoursesService {
       );
   }
   createCourse(course: Course): Observable<Course> {
+    this.loaderService.setLoading(true);
+
     return this.http
       .post<Course>(`${this.apiUrl}`, course, this.httpOptions)
       .pipe(
+        tap(() => {
+          this.loaderService.setLoading(false);
+        }),
         catchError(() =>
           throwError(
             () => new Error('createCourse failed. Please try again later.')
@@ -50,20 +61,28 @@ export class CoursesService {
       );
   }
   getCourseById(id: number): Observable<Course> {
-    return this.http
-      .get<Course>(`${this.apiUrl}/${id}`, this.httpOptions)
-      .pipe(
-        catchError(() =>
-          throwError(
-            () => new Error('getCourseById failed. Please try again later.')
-          )
+    this.loaderService.setLoading(true);
+
+    return this.http.get<Course>(`${this.apiUrl}/${id}`, this.httpOptions).pipe(
+      tap(() => {
+        this.loaderService.setLoading(false);
+      }),
+      catchError(() =>
+        throwError(
+          () => new Error('getCourseById failed. Please try again later.')
         )
-      );
+      )
+    );
   }
   updateCourse(course: Course): Observable<Course> {
+    this.loaderService.setLoading(true);
+
     return this.http
       .patch<Course>(`${this.apiUrl}/${course.id}`, course, this.httpOptions)
       .pipe(
+        tap(() => {
+          this.loaderService.setLoading(false);
+        }),
         catchError(() =>
           throwError(
             () => new Error('updateCourse failed. Please try again later.')
@@ -72,9 +91,14 @@ export class CoursesService {
       );
   }
   removeCourse(id: number): Observable<Course[]> {
+    this.loaderService.setLoading(true);
+
     return this.http
       .delete<Course[]>(`${this.apiUrl}/${id}`, this.httpOptions)
       .pipe(
+        tap(() => {
+          this.loaderService.setLoading(false);
+        }),
         catchError(() =>
           throwError(
             () => new Error('removeCourse failed. Please try again later.')
