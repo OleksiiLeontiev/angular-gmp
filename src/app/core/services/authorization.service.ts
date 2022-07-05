@@ -4,7 +4,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { LoginForm, Token } from '../models/authorization';
 import { User } from '../models/user';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { LoaderService } from '.';
 
 @Injectable({
@@ -12,8 +19,13 @@ import { LoaderService } from '.';
 })
 export class AuthorizationService {
   private apiUrl = 'http://localhost:3004/auth';
-  private isAuth: boolean = !!localStorage.getItem('accessToken');
-  public userData: Observable<User> = new Observable();
+  private isAuthenticated$$ = new BehaviorSubject<boolean>(
+    !!localStorage.getItem('accessToken')
+  );
+  readonly isAuthenticated$ = this.isAuthenticated$$.asObservable();
+
+  private userData$$ = new BehaviorSubject<null | User>(null);
+  readonly userData$ = this.userData$$.asObservable();
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -24,8 +36,8 @@ export class AuthorizationService {
     private http: HttpClient,
     private loaderService: LoaderService
   ) {
-    if (this.isAuthenticated()) {
-      this.userData = this.getUserInfo();
+    if (this.isAuthenticated$$.getValue()) {
+      this.getUserInfo().subscribe();
     }
   }
 
@@ -36,9 +48,9 @@ export class AuthorizationService {
       .pipe(
         tap((data: Token) => {
           localStorage.setItem('accessToken', data.token);
-          this.isAuth = true;
-          this.userData = this.getUserInfo();
+          this.isAuthenticated$$.next(true);
           this.loaderService.setLoading(false);
+          switchMap(() => this.getUserInfo());
         }),
         catchError(() =>
           throwError(() => new Error('Login failed. Please try again later.'))
@@ -48,18 +60,18 @@ export class AuthorizationService {
   logout(): void {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userInfo');
-    this.isAuth = false;
+    this.isAuthenticated$$.next(false);
     this.router.navigate(['/login']);
   }
-  isAuthenticated(): boolean {
-    return this.isAuth;
-  }
 
-  getUserInfo(): Observable<User> {
+  private getUserInfo(): Observable<User> {
     const token = localStorage.getItem('accessToken');
     return this.http
       .post<User>(`${this.apiUrl}/userinfo`, { token }, this.httpOptions)
       .pipe(
+        tap((user: User) => {
+          this.userData$$.next(user);
+        }),
         catchError(() =>
           throwError(
             () => new Error('getUserInfo failed. Please try again later.')

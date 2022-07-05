@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthorizationService } from '../../services';
 
 @Injectable({
@@ -22,14 +22,18 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> {
-    return new BehaviorSubject(this.checkLogin());
+    return this.authorizationService.isAuthenticated$;
   }
 
-  checkLogin(): true | UrlTree {
-    if (this.authorizationService.isAuthenticated()) {
-      return true;
-    }
+  checkLogin(): Observable<boolean> {
+    this.authorizationService.isAuthenticated$.subscribe(
+      (isLoggedIn: boolean) => {
+        if (!isLoggedIn) {
+          this.router.parseUrl('/login');
+        }
+      }
+    );
 
-    return this.router.parseUrl('/login');
+    return this.authorizationService.isAuthenticated$;
   }
 }

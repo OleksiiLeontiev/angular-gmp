@@ -10,23 +10,27 @@ import { AuthorizationService } from 'src/app/core/services';
 })
 export class MenuComponent implements OnInit, OnDestroy {
   public userName: string = '';
-  private sub!: Subscription;
+  private subs: Subscription[] = [];
   constructor(private authorizationService: AuthorizationService) {
-    this.sub = this.authorizationService.userData.subscribe((data: User) => {
-      this.userName = `${data.name.first} ${data.name.last}`;
-    });
+    this.subs.push(
+      this.authorizationService.userData$.subscribe((data: User | null) => {
+        if (data) {
+          this.userName = `${data.name.first} ${data.name.last}`;
+        }
+      })
+    );
   }
 
   ngOnInit(): void {}
 
   isAuthenticated() {
-    return this.authorizationService.isAuthenticated();
+    return this.authorizationService.isAuthenticated$;
   }
   onLogoutClick(): void {
     this.authorizationService.logout();
   }
 
   ngOnDestroy(): void {
-    if (this.sub) this.sub.unsubscribe();
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 }
