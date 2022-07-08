@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/core/models';
 import { AuthorizationService } from 'src/app/core/services';
 
@@ -11,26 +11,27 @@ import { AuthorizationService } from 'src/app/core/services';
 export class MenuComponent implements OnInit, OnDestroy {
   public userName: string = '';
   private subs: Subscription[] = [];
+  readonly isAuthenticated$ = this.authorizationService.isAuthenticated$;
+  private readonly destroy$ = new Subject<boolean>();
+
   constructor(private authorizationService: AuthorizationService) {
-    this.subs.push(
-      this.authorizationService.userData$.subscribe((data: User | null) => {
+    this.authorizationService.userData$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: User | null) => {
         if (data) {
           this.userName = `${data.name.first} ${data.name.last}`;
         }
-      })
-    );
+      });
   }
 
   ngOnInit(): void {}
 
-  isAuthenticated() {
-    return this.authorizationService.isAuthenticated$;
-  }
   onLogoutClick(): void {
     this.authorizationService.logout();
   }
 
   ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub.unsubscribe());
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

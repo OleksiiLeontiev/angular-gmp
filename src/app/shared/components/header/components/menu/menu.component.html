@@ -7,7 +7,7 @@
     icon="person"
   ></app-button>
   <app-button
-    *ngIf="isAuthenticated() | async"
+    *ngIf="isAuthenticated$ | async"
     type="text-button"
     class="menu__item"
     text="Log off"
