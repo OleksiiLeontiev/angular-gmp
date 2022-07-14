@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Breadcrumbs } from 'src/app/shared/models';
-import { CoursesService } from '../../courses.service';
-import { Course } from '../../models/course';
+import { Course, CoursesState } from '../../models/course';
+import { deleteCourse, getCoursesList, selectCoursesList } from '../../store';
 
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnInit, OnDestroy {
   public breadcrumbsData: Breadcrumbs[] = [
     {
       title: 'Courses',
@@ -18,58 +20,75 @@ export class CoursesListComponent implements OnInit {
   public searchValue: string = '';
   public courses: Course[] = [];
 
+  readonly coursesList$: Observable<Course[]> =
+    this.store.select(selectCoursesList);
+
   private loadMoreIndex: number = 3;
+  private readonly destroy$ = new Subject<boolean>();
 
   get coursesLength(): number {
     return this.courses.length;
   }
 
-  constructor(private coursesService: CoursesService) {}
+  constructor(private store: Store<CoursesState>) {
+    this.coursesList$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((list: Course[]) => {
+        if (this.courses.length) {
+          this.courses.push(...list);
+          this.loadMoreIndex++;
+        } else {
+          this.courses = [...list];
+        }
+      });
+  }
 
   ngOnInit(): void {
-    this.courses = this.getCourses();
+    this.courses = [];
+    this.getCourses(0, 3, this.searchValue);
   }
 
   async loadMoreClick() {
-    this.coursesService
-      .getCoursesList(this.loadMoreIndex, 1, this.searchValue)
-      .subscribe((data: Course[]) => {
-        this.courses.push(...data);
-        this.loadMoreIndex += 1;
-      });
+    this.getCourses(this.loadMoreIndex, 1, this.searchValue);
   }
 
   deleteCourse(course: Course) {
     const deleteConfirm = confirm(`Delete ${course.name}?`);
     if (deleteConfirm) {
-      this.coursesService.removeCourse(course.id).subscribe(() => {
-        this.courses = this.getCourses();
-      });
+      this.courses = [];
+      this.loadMoreIndex = 3;
+      this.store.dispatch(
+        deleteCourse({
+          id: course.id,
+          currentTextFragment: this.searchValue,
+        })
+      );
       console.log(`delete id=${course.id}`);
     }
-  }
-
-  editCourse(course: Course) {
-    this.coursesService.updateCourse(course);
-    console.log(`edit id=${course.id}`);
   }
 
   identify(index: number, item: any): string {
     return item.id;
   }
 
-  getCourses() {
-    const courses: Course[] = [];
-    this.coursesService
-      .getCoursesList(0, 3, this.searchValue)
-      .subscribe((data: Course[]) => {
-        courses.push(...data);
-      });
-    return courses;
+  getCourses(start: number, count: number, textFragment: string) {
+    this.store.dispatch(
+      getCoursesList({
+        start,
+        count,
+        textFragment,
+      })
+    );
   }
 
   onSearch(value: string) {
     this.searchValue = value;
-    this.courses = this.getCourses();
+    this.courses = [];
+    this.getCourses(0, 3, this.searchValue);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

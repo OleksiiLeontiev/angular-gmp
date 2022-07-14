@@ -16,7 +16,6 @@
       *ngFor="let course of courses | orderBy; trackBy: identify"
       [course]="course"
       (deleteEvent)="deleteCourse(course)"
-      (editEvent)="editCourse(course)"
     >
     </app-courses-item>
     <div class="courses-list__more">

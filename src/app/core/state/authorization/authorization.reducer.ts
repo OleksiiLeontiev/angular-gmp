@@ -30,14 +30,11 @@ export const authorizationReducer = createReducer(
     token: token,
     isAuthenticated: true,
   })),
-  on(AuthorizationActions.getUser, (state, userInfo) => {
-    console.log(state);
-    return {
-      ...state,
-      isAuthenticated: true,
-      user: userInfo,
-    };
-  }),
+  on(AuthorizationActions.getUser, (state, userInfo) => ({
+    ...state,
+    isAuthenticated: true,
+    user: userInfo,
+  })),
   on(AuthorizationActions.getUserSuccess, (state) => state),
   on(AuthorizationActions.logout, () => ({
     isAuthenticated: false,

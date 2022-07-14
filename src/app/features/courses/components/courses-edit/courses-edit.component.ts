@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Breadcrumbs } from 'src/app/shared/models';
-import { CoursesService } from '../../courses.service';
+import { Course, CoursesState } from '../../models/course';
+import {
+  createCourse,
+  getCourseById,
+  selectCourse,
+  updateCourse,
+} from '../../store';
 
 @Component({
   selector: 'app-courses-edit',
   templateUrl: './courses-edit.component.html',
   styleUrls: ['./courses-edit.component.scss'],
 })
-export class CoursesEditComponent {
+export class CoursesEditComponent implements OnDestroy {
   private operationType: 'edit' | 'create' = 'create';
 
   public breadcrumbsData: Breadcrumbs[] = [
@@ -19,53 +27,56 @@ export class CoursesEditComponent {
     },
   ];
 
+  private readonly destroy$ = new Subject<boolean>();
+
   get pageTitle(): string {
     return this.operationType === 'edit' ? 'Edit Course' : 'New Course';
   }
 
+  readonly course$: Observable<Course | null> = this.store.select(selectCourse);
+
   public courseForm!: FormGroup;
 
   constructor(
-    private coursesService: CoursesService,
-    private router: Router,
+    private store: Store<CoursesState>,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
     const courseId = this.route.snapshot.params['id'];
-    this.createForm(courseId);
+    if (courseId) {
+      this.store.dispatch(getCourseById({ id: courseId }));
+      this.course$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((course: Course | null) => {
+          if (course) this.createForm(course);
+        });
+    } else {
+      this.createForm();
+    }
   }
 
   onSave() {
     if (this.operationType === 'edit') {
-      this.coursesService
-        .updateCourse(this.courseForm.value)
-        .subscribe(() => this.router.navigate(['/courses']));
+      this.store.dispatch(updateCourse(this.courseForm.value));
     } else {
-      this.coursesService
-        .createCourse(this.courseForm.value)
-        .subscribe(() => this.router.navigate(['/courses']));
+      this.store.dispatch(createCourse(this.courseForm.value));
     }
   }
 
-  createForm(courseId: number): void {
-    if (courseId) {
-      this.coursesService.getCourseById(+courseId).subscribe((course) => {
-        const currentCourse = course;
-        if (currentCourse) {
-          this.operationType = 'edit';
-          this.courseForm = this.fb.group({
-            ...currentCourse,
-            authors: [
-              {
-                id: '5b7a846290d6ff6894377fb5',
-                name: 'Decker Albert',
-              },
-            ],
-          });
-          this.breadcrumbsData.push({
-            title: this.courseForm.value.name,
-          });
-        }
+  createForm(course?: Course): void {
+    if (course) {
+      this.operationType = 'edit';
+      this.courseForm = this.fb.group({
+        ...course,
+        authors: [
+          {
+            id: '5b7a846290d6ff6894377fb5',
+            name: 'Decker Albert',
+          },
+        ],
+      });
+      this.breadcrumbsData.push({
+        title: this.courseForm.value.name,
       });
     } else {
       this.courseForm = this.fb.group({
@@ -86,5 +97,10 @@ export class CoursesEditComponent {
         title: 'New course',
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
