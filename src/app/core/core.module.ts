@@ -7,12 +7,17 @@ import { authorizationReducer } from 'src/app/core/state/authorization/authoriza
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthorizationEffects } from './state/authorization';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    StoreModule.forRoot(authorizationReducer),
+    EffectsModule.forRoot([AuthorizationEffects]),
+    StoreModule.forRoot({
+      auth: authorizationReducer,
+    }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
