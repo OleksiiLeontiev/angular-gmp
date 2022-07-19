@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError, tap } from 'rxjs';
 
-import { Course } from './models/course';
+import { Course, CoursesListRequest } from './models/course';
 import { LoaderService } from 'src/app/core/services';
 
 @Injectable({
@@ -18,20 +18,18 @@ export class CoursesService {
   constructor(private http: HttpClient, private loaderService: LoaderService) {}
 
   getCoursesList(
-    start: number = 0,
-    count: number = 3,
-    textFragment: string = ''
+    props: CoursesListRequest = {
+      start: 0,
+      count: 3,
+      textFragment: '',
+    }
   ): Observable<Course[]> {
     this.loaderService.setLoading(true);
 
     return this.http
       .get<Course[]>(`${this.apiUrl}`, {
         ...this.httpOptions,
-        params: {
-          start,
-          count,
-          textFragment,
-        },
+        params: { ...props },
       })
       .pipe(
         tap(() => {
@@ -46,7 +44,6 @@ export class CoursesService {
   }
   createCourse(course: Course): Observable<Course> {
     this.loaderService.setLoading(true);
-
     return this.http
       .post<Course>(`${this.apiUrl}`, course, this.httpOptions)
       .pipe(
