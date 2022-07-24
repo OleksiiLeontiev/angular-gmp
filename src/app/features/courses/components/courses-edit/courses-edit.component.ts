@@ -95,7 +95,6 @@ export class CoursesEditComponent implements OnDestroy {
         length: new FormControl(course.length, Validators.required),
         date: new FormControl(course.date, Validators.required),
         isTopRated: course.isTopRated,
-        // ...course,
         authors: [course.authors],
       });
       this.breadcrumbsData.push({
@@ -124,7 +123,6 @@ export class CoursesEditComponent implements OnDestroy {
   }
 
   getErrorMessage(fieldName: string): string {
-    console.log('form', this.courseForm);
     const formField = this.courseForm.get(fieldName);
     if (formField?.touched && formField?.errors) {
       const errors = Object.keys(formField.errors);
@@ -153,7 +151,6 @@ export class CoursesEditComponent implements OnDestroy {
   }
 
   getCourseAuthors(): Author[] {
-    console.log(this.courseForm.get('authors'));
     return this.courseForm.get('authors')?.value || [];
   }
 
