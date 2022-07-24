@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError, tap } from 'rxjs';
 
-import { Course, CoursesListRequest } from './models/course';
+import { Author, Course, CoursesListRequest } from './models/course';
 import { LoaderService } from 'src/app/core/services';
 
 @Injectable({
@@ -10,6 +10,7 @@ import { LoaderService } from 'src/app/core/services';
 })
 export class CoursesService {
   private apiUrl = 'http://localhost:3004/courses';
+  private authorApiUrl = 'http://localhost:3004/authors';
 
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -99,6 +100,25 @@ export class CoursesService {
         catchError(() =>
           throwError(
             () => new Error('removeCourse failed. Please try again later.')
+          )
+        )
+      );
+  }
+
+  getAuthorsList(): Observable<Author[]> {
+    this.loaderService.setLoading(true);
+
+    return this.http
+      .get<Author[]>(`${this.authorApiUrl}`, {
+        ...this.httpOptions,
+      })
+      .pipe(
+        tap(() => {
+          this.loaderService.setLoading(false);
+        }),
+        catchError(() =>
+          throwError(
+            () => new Error('getCoursesList failed. Please try again later.')
           )
         )
       );

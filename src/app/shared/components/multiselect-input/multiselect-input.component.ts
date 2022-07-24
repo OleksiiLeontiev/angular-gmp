@@ -1,29 +1,37 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
-  AbstractControl,
   ControlContainer,
+  AbstractControl,
+  ValidationErrors,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
-  ValidationErrors,
 } from '@angular/forms';
+import { ListModel } from '../../models';
+
 @Component({
-  selector: 'app-duration-input',
-  templateUrl: './duration-input.component.html',
-  styleUrls: ['./duration-input.component.scss'],
+  selector: 'app-multiselect-input',
+  templateUrl: './multiselect-input.component.html',
+  styleUrls: ['./multiselect-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => MultiselectInputComponent),
     },
     {
       provide: NG_VALIDATORS,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => MultiselectInputComponent),
     },
   ],
 })
-export class DurationInputComponent implements OnInit {
+export class MultiselectInputComponent implements OnInit {
+  @Input()
+  public list: ListModel[] = [];
+
+  @Input()
+  public selectedList: ListModel[] = [];
+
   @Input()
   public label: string = '';
 
@@ -42,20 +50,20 @@ export class DurationInputComponent implements OnInit {
   @Input()
   public errorMessage: string = '';
 
-  public durationFormGroup: any;
+  public mselectFormGroup: any;
 
   constructor(private controlContainer: ControlContainer) {}
 
   ngOnInit(): void {
     if (this.controlContainer && this.formControlName) {
-      this.durationFormGroup = this.controlContainer.control;
+      this.mselectFormGroup = this.controlContainer.control;
     }
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    if (isNaN(control.value)) {
+    if (!control.value?.length) {
       return {
-        onlyNumbers: true,
+        authorsRequired: true,
       };
     }
     return null;

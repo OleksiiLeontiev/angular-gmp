@@ -35,6 +35,9 @@ export class InputComponent implements OnInit {
   @Input()
   public formControlName: any;
 
+  @Input()
+  public errorMessage: string = '';
+
   public inputFormGroup: any;
 
   constructor(private controlContainer: ControlContainer) {}

@@ -1,29 +1,30 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
-  AbstractControl,
-  ControlContainer,
-  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  NG_VALIDATORS,
+  ControlContainer,
+  AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+
 @Component({
-  selector: 'app-duration-input',
-  templateUrl: './duration-input.component.html',
-  styleUrls: ['./duration-input.component.scss'],
+  selector: 'app-date-input',
+  templateUrl: './date-input.component.html',
+  styleUrls: ['./date-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => DateInputComponent),
     },
     {
       provide: NG_VALIDATORS,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => DateInputComponent),
     },
   ],
 })
-export class DurationInputComponent implements OnInit {
+export class DateInputComponent implements OnInit {
   @Input()
   public label: string = '';
 
@@ -42,20 +43,22 @@ export class DurationInputComponent implements OnInit {
   @Input()
   public errorMessage: string = '';
 
-  public durationFormGroup: any;
+  public dateFormGroup: any;
 
   constructor(private controlContainer: ControlContainer) {}
 
   ngOnInit(): void {
     if (this.controlContainer && this.formControlName) {
-      this.durationFormGroup = this.controlContainer.control;
+      this.dateFormGroup = this.controlContainer.control;
     }
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    if (isNaN(control.value)) {
+    const dateFormat =
+      /^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/;
+    if (!dateFormat.test(control.value)) {
       return {
-        onlyNumbers: true,
+        datePattern: true,
       };
     }
     return null;

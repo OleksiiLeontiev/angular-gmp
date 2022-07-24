@@ -1,6 +1,11 @@
 <div class="input-box" [ngClass]="[size]" [formGroup]="inputFormGroup">
   <label for="email" class="input-label flex">
-    <span class="input-label__title">{{ label }}:</span>
+    <span class="input-label__title">
+      {{ label }}:
+      <span *ngIf="errorMessage" class="input-label__error">
+        {{ errorMessage }}</span
+      >
+    </span>
     <span class="input-label__required" *ngIf="required">* required</span>
   </label>
   <textarea

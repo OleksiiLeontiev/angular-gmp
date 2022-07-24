@@ -1,4 +1,4 @@
-<div class="duration-input" [formGroup]="durationFormGroup">
+<div class="date-input" [formGroup]="dateFormGroup">
   <app-input
     [label]="label"
     type="text"
@@ -9,7 +9,4 @@
     [errorMessage]="errorMessage"
     [formControlName]="formControlName"
   ></app-input>
-  <div class="duration-input__converted">
-    {{ durationFormGroup.value[formControlName] | time }}
-  </div>
 </div>

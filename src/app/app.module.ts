@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { CoursesModule, LoginModule } from './features';
 import { HeaderModule, FooterModule, NotfoundModule } from './shared';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { HeaderModule, FooterModule, NotfoundModule } from './shared';
     LoginModule,
     NotfoundModule,
     AppRoutingModule,
+    NgSelectModule,
   ],
   declarations: [AppComponent],
   providers: [],

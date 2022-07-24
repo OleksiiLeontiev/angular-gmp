@@ -1,0 +1,20 @@
+<div class="multiselect-input" [formGroup]="mselectFormGroup">
+  <label class="multiselect-label flex">
+    <span class="multiselect-label__title">
+      {{ label }}:
+      <span *ngIf="errorMessage" class="multiselect-label__error">
+        {{ errorMessage }}</span
+      >
+    </span>
+    <span class="multiselect-label__required" *ngIf="required">* required</span>
+  </label>
+  <ng-select
+    [items]="list"
+    bindLabel="name"
+    [placeholder]="placeholder"
+    [multiple]="true"
+    [formControlName]="formControlName"
+    [(ngModel)]="selectedList"
+  >
+  </ng-select>
+</div>

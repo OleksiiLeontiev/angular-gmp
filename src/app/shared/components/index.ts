@@ -6,3 +6,5 @@ export * from './input';
 export * from './duration-input';
 export * from './notfound';
 export * from './loader';
+export * from './date-input';
+export * from './multiselect-input';
