@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoursesSearchComponent } from './courses-search.component';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'src/app/shared';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule, InputModule } from 'src/app/shared';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    InputModule,
+    ReactiveFormsModule,
+  ],
   declarations: [CoursesSearchComponent],
   exports: [CoursesSearchComponent],
 })
