@@ -124,7 +124,7 @@ export class CoursesEditComponent implements OnDestroy {
 
   getErrorMessage(fieldName: string): string {
     const formField = this.courseForm.get(fieldName);
-    if (formField?.touched && formField?.errors) {
+    if (formField?.dirty && formField?.errors) {
       const errors = Object.keys(formField.errors);
       let errorMessage = '';
       switch (errors[0]) {

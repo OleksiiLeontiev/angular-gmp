@@ -1,5 +1,9 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -13,7 +17,7 @@ import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements ControlValueAccessor {
   @Input()
   public label: string = '';
 
@@ -33,22 +37,27 @@ export class InputComponent implements OnInit {
   public required: boolean = false;
 
   @Input()
-  public formControlName: any;
-
-  @Input()
   public errorMessage: string = '';
 
-  public inputFormGroup: any;
+  readonly control = new FormControl();
 
-  constructor(private controlContainer: ControlContainer) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    if (this.controlContainer && this.formControlName) {
-      this.inputFormGroup = this.controlContainer.control;
-    }
+  onTouched = () => {};
+
+  writeValue(value: any): void {
+    this.control.patchValue(value, { emitEvent: true });
   }
 
-  registerOnChange() {}
-  writeValue() {}
-  registerOnTouched() {}
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  registerOnChange(fn: any): void {
+    this.control.valueChanges.subscribe(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.control.disable() : this.control.enable();
+  }
 }

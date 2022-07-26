@@ -1,15 +1,14 @@
-<div class="duration-input" [formGroup]="durationFormGroup">
+<div class="duration-input">
   <app-input
     [label]="label"
     type="text"
-    [name]="name"
     size="medium"
     [placeholder]="placeholder"
     [required]="required"
     [errorMessage]="errorMessage"
-    [formControlName]="formControlName"
+    [formControl]="control"
   ></app-input>
   <div class="duration-input__converted">
-    {{ durationFormGroup.value[formControlName] | time }}
+    {{ control.value | time }}
   </div>
 </div>

@@ -1,10 +1,11 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import {
-  ControlContainer,
   AbstractControl,
   ValidationErrors,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
 } from '@angular/forms';
 import { ListModel } from '../../models';
 
@@ -25,7 +26,7 @@ import { ListModel } from '../../models';
     },
   ],
 })
-export class MultiselectInputComponent implements OnInit {
+export class MultiselectInputComponent implements ControlValueAccessor {
   @Input()
   public list: ListModel[] = [];
 
@@ -34,9 +35,6 @@ export class MultiselectInputComponent implements OnInit {
 
   @Input()
   public label: string = '';
-
-  @Input()
-  public name: string = '';
 
   @Input()
   public placeholder: string = '';
@@ -50,14 +48,28 @@ export class MultiselectInputComponent implements OnInit {
   @Input()
   public errorMessage: string = '';
 
-  public mselectFormGroup: any;
+  readonly control = new FormControl();
 
-  constructor(private controlContainer: ControlContainer) {}
+  value: any;
 
-  ngOnInit(): void {
-    if (this.controlContainer && this.formControlName) {
-      this.mselectFormGroup = this.controlContainer.control;
-    }
+  constructor() {}
+
+  onTouched = () => {};
+
+  writeValue(value: any): void {
+    this.control.patchValue(value, { emitEvent: false });
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  registerOnChange(fn: any): void {
+    this.control.valueChanges.subscribe(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.control.disable() : this.control.enable();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
@@ -68,8 +80,4 @@ export class MultiselectInputComponent implements OnInit {
     }
     return null;
   }
-
-  registerOnChange() {}
-  writeValue() {}
-  registerOnTouched() {}
 }

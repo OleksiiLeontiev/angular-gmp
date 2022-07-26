@@ -1,4 +1,4 @@
-<div class="input-box" [ngClass]="[size]" [formGroup]="inputFormGroup">
+<div class="input-box" [ngClass]="[size]">
   <label for="email" class="input-label flex">
     <span class="input-label__title">
       {{ label }}:
@@ -10,18 +10,20 @@
   </label>
   <textarea
     *ngIf="type === 'textarea'; else input"
-    [formControlName]="formControlName"
     [name]="name"
     [placeholder]="placeholder"
+    [formControl]="control"
     class="input"
+    [ngClass]="{ invalid: errorMessage }"
   ></textarea>
   <ng-template #input>
     <input
-      [formControlName]="formControlName"
       [type]="type"
       [name]="name"
       [placeholder]="placeholder"
+      [formControl]="control"
       class="input"
+      [ngClass]="{ invalid: errorMessage }"
     />
   </ng-template>
 </div>

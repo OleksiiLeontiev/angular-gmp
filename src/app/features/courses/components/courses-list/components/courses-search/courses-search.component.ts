@@ -18,13 +18,10 @@ import { filter, debounceTime, Subject, takeUntil } from 'rxjs';
 export class CoursesSearchComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<boolean>();
 
-  public searchControl!: FormControl;
+  public searchControl: FormControl = new FormControl('');
 
   @Output()
   searchValueChange = new EventEmitter<string>();
-
-  @ViewChild('searchInput', { static: true })
-  searchInput!: ElementRef<HTMLElement>;
 
   constructor(private fb: FormBuilder) {}
 
@@ -32,8 +29,7 @@ export class CoursesSearchComponent implements OnInit, OnDestroy {
     this.subsribeToSearch();
   }
 
-  private subsribeToSearch = (): void => {
-    this.searchControl = this.fb.control('');
+  private subsribeToSearch(): void {
     this.searchControl.valueChanges
       .pipe(
         filter((text) => text.length > 2 || text.length === 0),
@@ -41,7 +37,7 @@ export class CoursesSearchComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((value) => this.searchValueChange.emit(value));
-  };
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);

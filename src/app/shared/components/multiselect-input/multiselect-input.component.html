@@ -1,4 +1,4 @@
-<div class="multiselect-input" [formGroup]="mselectFormGroup">
+<div class="multiselect-input">
   <label class="multiselect-label flex">
     <span class="multiselect-label__title">
       {{ label }}:
@@ -13,8 +13,7 @@
     bindLabel="name"
     [placeholder]="placeholder"
     [multiple]="true"
-    [formControlName]="formControlName"
-    [(ngModel)]="selectedList"
+    [formControl]="control"
   >
   </ng-select>
 </div>

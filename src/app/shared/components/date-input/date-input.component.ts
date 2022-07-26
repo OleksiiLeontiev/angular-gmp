@@ -1,10 +1,11 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
   NG_VALIDATORS,
-  ControlContainer,
   AbstractControl,
   ValidationErrors,
+  FormControl,
+  ControlValueAccessor,
 } from '@angular/forms';
 
 @Component({
@@ -24,12 +25,9 @@ import {
     },
   ],
 })
-export class DateInputComponent implements OnInit {
+export class DateInputComponent implements ControlValueAccessor {
   @Input()
   public label: string = '';
-
-  @Input()
-  public name: string = '';
 
   @Input()
   public placeholder: string = '';
@@ -38,19 +36,28 @@ export class DateInputComponent implements OnInit {
   public required: boolean = false;
 
   @Input()
-  public formControlName: any;
-
-  @Input()
   public errorMessage: string = '';
 
-  public dateFormGroup: any;
+  readonly control = new FormControl();
 
-  constructor(private controlContainer: ControlContainer) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    if (this.controlContainer && this.formControlName) {
-      this.dateFormGroup = this.controlContainer.control;
-    }
+  onTouched = () => {};
+
+  writeValue(value: any): void {
+    this.control.patchValue(value, { emitEvent: false });
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  registerOnChange(fn: any): void {
+    this.control.valueChanges.subscribe(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.control.disable() : this.control.enable();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
@@ -63,8 +70,4 @@ export class DateInputComponent implements OnInit {
     }
     return null;
   }
-
-  registerOnChange() {}
-  writeValue() {}
-  registerOnTouched() {}
 }

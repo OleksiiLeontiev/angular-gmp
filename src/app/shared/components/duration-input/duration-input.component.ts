@@ -1,7 +1,8 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import {
   AbstractControl,
-  ControlContainer,
+  ControlValueAccessor,
+  FormControl,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
@@ -23,12 +24,9 @@ import {
     },
   ],
 })
-export class DurationInputComponent implements OnInit {
+export class DurationInputComponent implements ControlValueAccessor {
   @Input()
   public label: string = '';
-
-  @Input()
-  public name: string = '';
 
   @Input()
   public placeholder: string = '';
@@ -37,19 +35,28 @@ export class DurationInputComponent implements OnInit {
   public required: boolean = false;
 
   @Input()
-  public formControlName: any;
-
-  @Input()
   public errorMessage: string = '';
 
-  public durationFormGroup: any;
+  readonly control = new FormControl();
 
-  constructor(private controlContainer: ControlContainer) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    if (this.controlContainer && this.formControlName) {
-      this.durationFormGroup = this.controlContainer.control;
-    }
+  onTouched = () => {};
+
+  writeValue(value: any): void {
+    this.control.patchValue(value, { emitEvent: false });
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  registerOnChange(fn: any): void {
+    this.control.valueChanges.subscribe(fn);
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    isDisabled ? this.control.disable() : this.control.enable();
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
@@ -60,8 +67,4 @@ export class DurationInputComponent implements OnInit {
     }
     return null;
   }
-
-  registerOnChange() {}
-  writeValue() {}
-  registerOnTouched() {}
 }

@@ -34,7 +34,7 @@
 .input {
   width: 100%;
 
-  &.ng-invalid.ng-touched{
+  &.invalid {
     border: 1px solid red;
   }
 }
