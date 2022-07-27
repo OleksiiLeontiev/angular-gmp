@@ -1,48 +1,50 @@
 <app-breadcrumbs [breadcrumbsItems]="breadcrumbsData"></app-breadcrumbs>
 <div class="container">
   <div class="courses-edit" *ngIf="courseForm" [formGroup]="courseForm">
-    <h1 class="courses-edit__title">{{ pageTitle }}</h1>
+    <h1 class="courses-edit__title">
+      {{ "COURSE_EDIT_PAGE." + pageTitle | translate }}
+    </h1>
     <app-input
-      label="Title"
+      [label]="'COURSE_EDIT_PAGE.TITLE_LABEL' | translate"
       type="text"
       name="name"
-      placeholder="Text input"
+      [placeholder]="'COURSE_EDIT_PAGE.TITLE_PH' | translate"
       [required]="true"
       [errorMessage]="getErrorMessage('name')"
       formControlName="name"
     ></app-input>
 
     <app-input
-      label="Description"
+      [label]="'COURSE_EDIT_PAGE.DESCRIPTION_LABEL' | translate"
       type="textarea"
       name="description"
-      placeholder="Description"
+      [placeholder]="'COURSE_EDIT_PAGE.DESCRIPTION_PH' | translate"
       [required]="true"
       [errorMessage]="getErrorMessage('description')"
       formControlName="description"
     ></app-input>
 
     <app-date-input
-      label="Date"
-      placeholder="MM/DD/YYYY"
+      [label]="'COURSE_EDIT_PAGE.DATE_LABEL' | translate"
+      [placeholder]="'COURSE_EDIT_PAGE.DATE_PH' | translate"
       [required]="true"
       [errorMessage]="getErrorMessage('date')"
       formControlName="date"
     ></app-date-input>
 
     <app-duration-input
-      label="Duration"
-      placeholder="minutes"
+      [label]="'COURSE_EDIT_PAGE.DURATION_LABEL' | translate"
+      [placeholder]="'COURSE_EDIT_PAGE.DURATION_PH' | translate"
       [required]="true"
       [errorMessage]="getErrorMessage('length')"
       formControlName="length"
     ></app-duration-input>
 
     <app-multiselect-input
-      label="Authors"
+      [label]="'COURSE_EDIT_PAGE.AUTHORS_LABEL' | translate"
+      [placeholder]="'COURSE_EDIT_PAGE.AUTHORS_PH' | translate"
       type="text"
       size="medium"
-      placeholder="Start typing"
       [required]="true"
       [list]="authorsList"
       [selectedList]="getCourseAuthors()"
@@ -53,13 +55,13 @@
     <div class="courses-edit__button-box">
       <app-button
         class="courses-edit__button"
-        text="Cancel"
+        [text]="'COURSE_EDIT_PAGE.CANCEL_BUTTON' | translate"
         type="grey"
         routerLink="/courses"
       ></app-button>
       <app-button
         class="courses-edit__button"
-        text="Save"
+        [text]="'COURSE_EDIT_PAGE.SAVE_BUTTON' | translate"
         [disabled]="courseForm.status === 'INVALID'"
         (click)="onSave()"
       ></app-button>

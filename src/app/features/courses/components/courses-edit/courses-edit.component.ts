@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Breadcrumbs } from 'src/app/shared/models';
 import { CoursesService } from '../../courses.service';
@@ -38,7 +39,9 @@ export class CoursesEditComponent implements OnDestroy {
   private readonly destroy$ = new Subject<boolean>();
 
   get pageTitle(): string {
-    return this.operationType === 'edit' ? 'Edit Course' : 'New Course';
+    return this.operationType === 'edit'
+      ? 'EDIT_COURSE_TITLE'
+      : 'NEW_COURSE_TITLE';
   }
 
   readonly course$: Observable<Course | null> = this.store.select(selectCourse);
@@ -49,8 +52,15 @@ export class CoursesEditComponent implements OnDestroy {
     private store: Store<CoursesState>,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private translateService: TranslateService
   ) {
+    this.translateService
+      .get('BREADCRUMBS.COURSES')
+      .subscribe((res: string) => {
+        this.breadcrumbsData[0].title = res;
+      });
+
     const courseId = this.route.snapshot.params['id'];
     this.coursesService
       .getAuthorsList()
@@ -116,9 +126,13 @@ export class CoursesEditComponent implements OnDestroy {
         isTopRated: false,
         authors: [],
       });
-      this.breadcrumbsData.push({
-        title: 'New course',
-      });
+      this.translateService
+        .get('BREADCRUMBS.NEW_COURSE')
+        .subscribe((res: string) => {
+          this.breadcrumbsData.push({
+            title: res,
+          });
+        });
     }
   }
 
@@ -129,19 +143,32 @@ export class CoursesEditComponent implements OnDestroy {
       let errorMessage = '';
       switch (errors[0]) {
         case 'maxlength':
-          errorMessage = `Max length - ${formField.errors['maxlength'].requiredLength}`;
+          errorMessage = this.translateService.instant(
+            'COURSE_EDIT_PAGE.ERRORS.MAXLENGTH',
+            {
+              maxlength: formField.errors['maxlength'].requiredLength,
+            }
+          );
           break;
         case 'required':
-          errorMessage = 'This field is required';
+          errorMessage = this.translateService.instant(
+            'COURSE_EDIT_PAGE.ERRORS.REQUIRED'
+          );
           break;
         case 'onlyNumbers':
-          errorMessage = 'Only numbers is allowed';
+          errorMessage = this.translateService.instant(
+            'COURSE_EDIT_PAGE.ERRORS.ONLY_NUMBERS'
+          );
           break;
         case 'datePattern':
-          errorMessage = 'Must match MM/DD/YYYY';
+          errorMessage = this.translateService.instant(
+            'COURSE_EDIT_PAGE.ERRORS.DATE_PATTERN'
+          );
           break;
         case 'authorsRequired':
-          errorMessage = 'Authors - required field';
+          errorMessage = this.translateService.instant(
+            'COURSE_EDIT_PAGE.ERRORS.AUTHORS_REQUIRED'
+          );
           break;
       }
 

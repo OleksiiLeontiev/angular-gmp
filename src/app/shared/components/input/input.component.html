@@ -6,7 +6,9 @@
         {{ errorMessage }}</span
       >
     </span>
-    <span class="input-label__required" *ngIf="required">* required</span>
+    <span class="input-label__required" *ngIf="required">
+      * {{ "BASE.REQUIRED" | translate }}
+    </span>
   </label>
   <textarea
     *ngIf="type === 'textarea'; else input"

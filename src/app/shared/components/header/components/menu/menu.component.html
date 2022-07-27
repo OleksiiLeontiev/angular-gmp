@@ -10,7 +10,7 @@
     *ngIf="isAuthenticated$ | async"
     type="text-button"
     class="menu__item"
-    text="Log off"
+    [text]="'HEADER.LOGOUT' | translate"
     icon="logout"
     (click)="onLogoutClick()"
   ></app-button>

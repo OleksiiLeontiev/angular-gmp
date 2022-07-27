@@ -6,7 +6,9 @@
         {{ errorMessage }}</span
       >
     </span>
-    <span class="multiselect-label__required" *ngIf="required">* required</span>
+    <span class="multiselect-label__required" *ngIf="required">
+      * {{ "BASE.REQUIRED" | translate }}
+    </span>
   </label>
   <ng-select
     [items]="list"

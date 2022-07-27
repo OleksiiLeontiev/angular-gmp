@@ -5,6 +5,7 @@ import { CoursesItemModule } from './components';
 import { BreadcrumbsModule, ButtonModule } from 'src/app/shared';
 import { OrderByModule, FilterModule } from '../../pipes';
 import { CoursesSearchModule } from './components/courses-search';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { CoursesSearchModule } from './components/courses-search';
     OrderByModule,
     FilterModule,
     BreadcrumbsModule,
+    TranslateModule,
   ],
   declarations: [CoursesListComponent],
   exports: [CoursesListComponent],

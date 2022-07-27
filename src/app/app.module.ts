@@ -7,6 +7,13 @@ import { CoreModule } from './core/core.module';
 import { CoursesModule, LoginModule } from './features';
 import { HeaderModule, FooterModule, NotfoundModule } from './shared';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   imports: [
@@ -19,6 +26,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NotfoundModule,
     AppRoutingModule,
     NgSelectModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+      defaultLanguage: 'en',
+    }),
   ],
   declarations: [AppComponent],
   providers: [],

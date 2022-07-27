@@ -1,0 +1,59 @@
+{
+  "BASE": {
+    "REQUIRED": "required",
+    "NOT_FOUND": "404 Not Found",
+    "LOADING": "Loading...",
+    "MINUTES_SHORT": "min",
+    "HOURS_SHORT": "h"
+  },
+  "HEADER": {
+    "LOGOUT": "Log off",
+    "LOGO_TEXT": "Video Course"
+  },
+  "BREADCRUMBS": {
+    "COURSES": "Courses",
+    "NEW_COURSE": "New course"
+  },
+  "FOOTER": {
+    "TEXT": "Copyright © Videocourses. All rights reserved"
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "Login",
+    "LOGIN_LABEL": "Login",
+    "PASSWORD_LABEL": "Password",
+    "FORGOT_PASSWORD": "Forgot password",
+    "LOGIN_BUTTON": "Login"
+  },
+  "COURSES_PAGE": {
+    "SEARCH_PLACEHOLDER": "Type to search",
+    "DELETE_CONFIRM_MESSAGE": "Delete {{courseName}}?",
+    "ADD_COURSE": "Add course",
+    "LOAD_MORE": "Load more",
+    "NOT_FOUND": "There are no courses yet. Feel free to add new courses.",
+    "EDIT_BUTTON": "Edit",
+    "DELETE_BUTTON": "Delete"
+  },
+  "COURSE_EDIT_PAGE": {
+    "EDIT_COURSE_TITLE": "Edit Course",
+    "NEW_COURSE_TITLE": "New Course",
+    "TITLE_LABEL": "Title",
+    "TITLE_PH": "Text input",
+    "DESCRIPTION_LABEL": "Description",
+    "DESCRIPTION_PH": "Description",
+    "DATE_LABEL": "Date",
+    "DATE_PH": "MM/DD/YYYY",
+    "DURATION_LABEL": "Duration",
+    "DURATION_PH": "minutes",
+    "AUTHORS_LABEL": "Authors",
+    "AUTHORS_PH": "Start typing",
+    "SAVE_BUTTON": "Save",
+    "CANCEL_BUTTON": "Cancel",
+    "ERRORS": {
+      "MAXLENGTH": "Max length - {{maxlength}}",
+      "REQUIRED": "This field is required",
+      "ONLY_NUMBERS": "Only numbers is allowed",
+      "DATE_PATTERN": "Must match MM/DD/YYYY",
+      "AUTHORS_REQUIRED": "Authors - required field"
+    }
+  }
+}

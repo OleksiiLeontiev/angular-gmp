@@ -4,6 +4,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { Breadcrumbs } from 'src/app/shared/models';
 import { Course, CoursesState } from '../../models/course';
 import { deleteCourse, getCoursesList, selectCoursesList } from '../../store';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-courses-list',
@@ -30,7 +31,16 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     return this.courses.length;
   }
 
-  constructor(private store: Store<CoursesState>) {
+  constructor(
+    private store: Store<CoursesState>,
+    private translateService: TranslateService
+  ) {
+    this.translateService
+      .get('BREADCRUMBS.COURSES')
+      .subscribe((res: string) => {
+        this.breadcrumbsData[0].title = res;
+      });
+
     this.coursesList$
       .pipe(takeUntil(this.destroy$))
       .subscribe((list: Course[]) => {
@@ -53,7 +63,12 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   deleteCourse(course: Course) {
-    const deleteConfirm = confirm(`Delete ${course.name}?`);
+    const deleteConfirm = confirm(
+      this.translateService.instant('COURSES_PAGE.DELETE_CONFIRM_MESSAGE', {
+        courseName: course.name,
+      })
+    );
+
     if (deleteConfirm) {
       this.courses = [];
       this.loadMoreIndex = 3;
