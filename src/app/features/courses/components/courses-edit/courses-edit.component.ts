@@ -1,10 +1,16 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Breadcrumbs } from 'src/app/shared/models';
-import { Course, CoursesState } from '../../models/course';
+import { CoursesService } from '../../courses.service';
+import { Author, Course, CoursesState } from '../../models/course';
 import {
   createCourse,
   getCourseById,
@@ -27,6 +33,8 @@ export class CoursesEditComponent implements OnDestroy {
     },
   ];
 
+  public authorsList: Author[] = [];
+
   private readonly destroy$ = new Subject<boolean>();
 
   get pageTitle(): string {
@@ -40,22 +48,30 @@ export class CoursesEditComponent implements OnDestroy {
   constructor(
     private store: Store<CoursesState>,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private coursesService: CoursesService
   ) {
     const courseId = this.route.snapshot.params['id'];
-    if (courseId) {
-      this.store.dispatch(getCourseById({ id: courseId }));
-      this.course$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((course: Course | null) => {
-          if (course) this.createForm(course);
-        });
-    } else {
-      this.createForm();
-    }
+    this.coursesService
+      .getAuthorsList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((authors: Author[]) => {
+        this.authorsList = authors;
+        if (courseId) {
+          this.store.dispatch(getCourseById({ id: courseId }));
+          this.course$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((course: Course | null) => {
+              if (course) this.createForm(course);
+            });
+        } else {
+          this.createForm();
+        }
+      });
   }
 
   onSave() {
+    if (this.courseForm.status === 'INVALID') return;
     if (this.operationType === 'edit') {
       this.store.dispatch(updateCourse(this.courseForm.value));
     } else {
@@ -67,13 +83,19 @@ export class CoursesEditComponent implements OnDestroy {
     if (course) {
       this.operationType = 'edit';
       this.courseForm = this.fb.group({
-        ...course,
-        authors: [
-          {
-            id: '5b7a846290d6ff6894377fb5',
-            name: 'Decker Albert',
-          },
-        ],
+        id: course.id,
+        name: new FormControl(course.name, [
+          Validators.maxLength(50),
+          Validators.required,
+        ]),
+        description: new FormControl(course.description, [
+          Validators.maxLength(500),
+          Validators.required,
+        ]),
+        length: new FormControl(course.length, Validators.required),
+        date: new FormControl(course.date, Validators.required),
+        isTopRated: course.isTopRated,
+        authors: [course.authors],
       });
       this.breadcrumbsData.push({
         title: this.courseForm.value.name,
@@ -81,22 +103,55 @@ export class CoursesEditComponent implements OnDestroy {
     } else {
       this.courseForm = this.fb.group({
         id: Date.now(),
-        name: '',
-        description: '',
-        length: 60,
-        date: '',
+        name: new FormControl('', [
+          Validators.maxLength(50),
+          Validators.required,
+        ]),
+        description: new FormControl('', [
+          Validators.maxLength(500),
+          Validators.required,
+        ]),
+        length: new FormControl(60, Validators.required),
+        date: new FormControl('', Validators.required),
         isTopRated: false,
-        authors: [
-          {
-            id: '5b7a846290d6ff6894377fb5',
-            name: 'Decker Albert',
-          },
-        ],
+        authors: [],
       });
       this.breadcrumbsData.push({
         title: 'New course',
       });
     }
+  }
+
+  getErrorMessage(fieldName: string): string {
+    const formField = this.courseForm.get(fieldName);
+    if (formField?.dirty && formField?.errors) {
+      const errors = Object.keys(formField.errors);
+      let errorMessage = '';
+      switch (errors[0]) {
+        case 'maxlength':
+          errorMessage = `Max length - ${formField.errors['maxlength'].requiredLength}`;
+          break;
+        case 'required':
+          errorMessage = 'This field is required';
+          break;
+        case 'onlyNumbers':
+          errorMessage = 'Only numbers is allowed';
+          break;
+        case 'datePattern':
+          errorMessage = 'Must match MM/DD/YYYY';
+          break;
+        case 'authorsRequired':
+          errorMessage = 'Authors - required field';
+          break;
+      }
+
+      return errorMessage;
+    }
+    return '';
+  }
+
+  getCourseAuthors(): Author[] {
+    return this.courseForm.get('authors')?.value || [];
   }
 
   ngOnDestroy(): void {

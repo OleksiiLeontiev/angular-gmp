@@ -1,6 +1,6 @@
 <app-breadcrumbs [breadcrumbsItems]="breadcrumbsData"></app-breadcrumbs>
 <div class="container">
-  <div class="courses-edit" [formGroup]="courseForm">
+  <div class="courses-edit" *ngIf="courseForm" [formGroup]="courseForm">
     <h1 class="courses-edit__title">{{ pageTitle }}</h1>
     <app-input
       label="Title"
@@ -8,6 +8,7 @@
       name="name"
       placeholder="Text input"
       [required]="true"
+      [errorMessage]="getErrorMessage('name')"
       formControlName="name"
     ></app-input>
 
@@ -17,36 +18,37 @@
       name="description"
       placeholder="Description"
       [required]="true"
+      [errorMessage]="getErrorMessage('description')"
       formControlName="description"
     ></app-input>
 
-    <app-input
+    <app-date-input
       label="Date"
-      type="text"
-      name="date"
-      size="small"
       placeholder="MM/DD/YYYY"
       [required]="true"
+      [errorMessage]="getErrorMessage('date')"
       formControlName="date"
-    ></app-input>
+    ></app-date-input>
 
     <app-duration-input
       label="Duration"
-      name="length"
       placeholder="minutes"
       [required]="true"
+      [errorMessage]="getErrorMessage('length')"
       formControlName="length"
     ></app-duration-input>
 
-    <app-input
+    <app-multiselect-input
       label="Authors"
       type="text"
-      name="authors"
       size="medium"
       placeholder="Start typing"
       [required]="true"
+      [list]="authorsList"
+      [selectedList]="getCourseAuthors()"
+      [errorMessage]="getErrorMessage('authors')"
       formControlName="authors"
-    ></app-input>
+    ></app-multiselect-input>
 
     <div class="courses-edit__button-box">
       <app-button
@@ -58,6 +60,7 @@
       <app-button
         class="courses-edit__button"
         text="Save"
+        [disabled]="courseForm.status === 'INVALID'"
         (click)="onSave()"
       ></app-button>
     </div>

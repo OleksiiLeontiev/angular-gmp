@@ -8,7 +8,12 @@
   <span *ngIf="text" class="mybutton__text">{{ text }}</span>
 </a>
 <ng-template #button>
-  <button [ngClass]="[type, size]" class="mybutton" type="button">
+  <button
+    [ngClass]="[type, size]"
+    class="mybutton"
+    type="button"
+    [disabled]="disabled"
+  >
     <span class="mybutton__icon material-icons" *ngIf="icon">{{ icon }}</span>
     <span *ngIf="text" class="mybutton__text">{{ text }}</span>
   </button>

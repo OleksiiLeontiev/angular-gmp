@@ -1,30 +1,38 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import {
   AbstractControl,
-  ControlValueAccessor,
-  FormControl,
+  ValidationErrors,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
-  ValidationErrors,
+  ControlValueAccessor,
+  FormControl,
 } from '@angular/forms';
+import { ListModel } from '../../models';
+
 @Component({
-  selector: 'app-duration-input',
-  templateUrl: './duration-input.component.html',
-  styleUrls: ['./duration-input.component.scss'],
+  selector: 'app-multiselect-input',
+  templateUrl: './multiselect-input.component.html',
+  styleUrls: ['./multiselect-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => MultiselectInputComponent),
     },
     {
       provide: NG_VALIDATORS,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => MultiselectInputComponent),
     },
   ],
 })
-export class DurationInputComponent implements ControlValueAccessor {
+export class MultiselectInputComponent implements ControlValueAccessor {
+  @Input()
+  public list: ListModel[] = [];
+
+  @Input()
+  public selectedList: ListModel[] = [];
+
   @Input()
   public label: string = '';
 
@@ -35,9 +43,14 @@ export class DurationInputComponent implements ControlValueAccessor {
   public required: boolean = false;
 
   @Input()
+  public formControlName: any;
+
+  @Input()
   public errorMessage: string = '';
 
   readonly control = new FormControl();
+
+  value: any;
 
   constructor() {}
 
@@ -60,9 +73,9 @@ export class DurationInputComponent implements ControlValueAccessor {
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    if (isNaN(control.value)) {
+    if (!control.value?.length) {
       return {
-        onlyNumbers: true,
+        authorsRequired: true,
       };
     }
     return null;

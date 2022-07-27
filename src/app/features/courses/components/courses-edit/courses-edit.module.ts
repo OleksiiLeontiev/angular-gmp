@@ -5,8 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   BreadcrumbsModule,
   ButtonModule,
+  DateInputModule,
   DurationInputModule,
   InputModule,
+  MultiselectInputModule,
 } from 'src/app/shared';
 
 @NgModule({
@@ -16,8 +18,10 @@ import {
     ButtonModule,
     InputModule,
     DurationInputModule,
+    DateInputModule,
     ReactiveFormsModule,
     BreadcrumbsModule,
+    MultiselectInputModule,
   ],
   declarations: [CoursesEditComponent],
   exports: [CoursesEditComponent],

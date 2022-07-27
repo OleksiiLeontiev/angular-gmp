@@ -1,19 +1,8 @@
-.input-box {
-  color: #474A59;
+.multiselect-input {
+  width: 50%;
   margin-bottom: 12px;
-  max-width: 100%;
-
-  &.default {
-    width: 100%;
-  }
-  &.medium {
-    width: 312px;
-  }
-  &.small {
-    width: 150px;
-  }
 }
-.input-label {
+.multiselect-label {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
@@ -29,12 +18,5 @@
   &__required {
     line-height: 24px;
     font-size: 12px;
-  }
-}
-.input {
-  width: 100%;
-
-  &.invalid {
-    border: 1px solid red;
   }
 }

@@ -1,30 +1,31 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import {
-  AbstractControl,
-  ControlValueAccessor,
-  FormControl,
-  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  NG_VALIDATORS,
+  AbstractControl,
   ValidationErrors,
+  FormControl,
+  ControlValueAccessor,
 } from '@angular/forms';
+
 @Component({
-  selector: 'app-duration-input',
-  templateUrl: './duration-input.component.html',
-  styleUrls: ['./duration-input.component.scss'],
+  selector: 'app-date-input',
+  templateUrl: './date-input.component.html',
+  styleUrls: ['./date-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => DateInputComponent),
     },
     {
       provide: NG_VALIDATORS,
       multi: true,
-      useExisting: forwardRef(() => DurationInputComponent),
+      useExisting: forwardRef(() => DateInputComponent),
     },
   ],
 })
-export class DurationInputComponent implements ControlValueAccessor {
+export class DateInputComponent implements ControlValueAccessor {
   @Input()
   public label: string = '';
 
@@ -60,9 +61,11 @@ export class DurationInputComponent implements ControlValueAccessor {
   }
 
   validate(control: AbstractControl): ValidationErrors | null {
-    if (isNaN(control.value)) {
+    const dateFormat =
+      /^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/;
+    if (!dateFormat.test(control.value)) {
       return {
-        onlyNumbers: true,
+        datePattern: true,
       };
     }
     return null;

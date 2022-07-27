@@ -21,6 +21,9 @@ export class ButtonComponent implements OnInit {
   @Input()
   public size: 'small' | 'medium' = 'medium';
 
+  @Input()
+  public disabled: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {}
