@@ -14,4 +14,9 @@
     icon="logout"
     (click)="onLogoutClick()"
   ></app-button>
+
+  <select [(ngModel)]="selectedLang" (change)="onLanguageChange()">
+    <option value="en">{{ "HEADER.EN" | translate }}</option>
+    <option value="ru">{{ "HEADER.RU" | translate }}</option>
+  </select>
 </div>

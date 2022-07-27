@@ -8,7 +8,9 @@
   },
   "HEADER": {
     "LOGOUT": "Log off",
-    "LOGO_TEXT": "Video Course"
+    "LOGO_TEXT": "Video Course",
+    "RU": "Ru",
+    "EN": "En"
   },
   "BREADCRUMBS": {
     "COURSES": "Courses",
