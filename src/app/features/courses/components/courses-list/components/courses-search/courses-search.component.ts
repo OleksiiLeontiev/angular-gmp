@@ -1,13 +1,11 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { filter, debounceTime, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -23,7 +21,7 @@ export class CoursesSearchComponent implements OnInit, OnDestroy {
   @Output()
   searchValueChange = new EventEmitter<string>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.subsribeToSearch();
