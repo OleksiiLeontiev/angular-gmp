@@ -11,7 +11,8 @@
     "dev:ssr": "ng run angular-gmp:serve-ssr",
     "serve:ssr": "node dist/angular-gmp/server/main.js",
     "build:ssr": "ng build && ng run angular-gmp:server",
-    "prerender": "ng run angular-gmp:prerender"
+    "prerender": "ng run angular-gmp:prerender",
+    "prerender:file": "ng run angular-gmp:prerender --routes-file routes.txt"
   },
   "private": true,
   "dependencies": {
