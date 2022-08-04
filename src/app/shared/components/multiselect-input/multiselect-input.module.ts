@@ -4,6 +4,7 @@ import { MultiselectInputComponent } from './multiselect-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { InputModule } from '../input';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { InputModule } from '../input';
     InputModule,
     ReactiveFormsModule,
     NgSelectModule,
+    TranslateModule,
   ],
   declarations: [MultiselectInputComponent],
   exports: [MultiselectInputComponent],

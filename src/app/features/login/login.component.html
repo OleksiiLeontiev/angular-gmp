@@ -1,25 +1,27 @@
 <div class="login flex" [formGroup]="loginForm">
   <div class="login__card">
-    <h1 class="login__title">Login</h1>
+    <h1 class="login__title">{{ "LOGIN_PAGE.TITLE" | translate }}</h1>
     <app-input
-      label="Login"
+      [label]="'LOGIN_PAGE.LOGIN_LABEL' | translate"
       type="text"
       name="login"
       [required]="true"
       formControlName="login"
     ></app-input>
     <app-input
-      label="Password"
+      [label]="'LOGIN_PAGE.PASSWORD_LABEL' | translate"
       type="password"
       name="password"
       [required]="true"
       formControlName="password"
     ></app-input>
     <div class="login__bottom flex">
-      <a href="#" class="login__forgot-password">Forgot password</a>
+      <a href="#" class="login__forgot-password">{{
+        "LOGIN_PAGE.FORGOT_PASSWORD" | translate
+      }}</a>
       <app-button
         class="login__submit"
-        text="Login"
+        [text]="'LOGIN_PAGE.LOGIN_BUTTON' | translate"
         (click)="onLogin()"
       ></app-button>
     </div>

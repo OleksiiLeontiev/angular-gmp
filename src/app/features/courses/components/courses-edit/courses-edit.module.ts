@@ -10,6 +10,7 @@ import {
   InputModule,
   MultiselectInputModule,
 } from 'src/app/shared';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import {
     ReactiveFormsModule,
     BreadcrumbsModule,
     MultiselectInputModule,
+    TranslateModule,
   ],
   declarations: [CoursesEditComponent],
   exports: [CoursesEditComponent],

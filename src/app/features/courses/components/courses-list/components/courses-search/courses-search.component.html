@@ -2,7 +2,7 @@
   <input
     type="text"
     class="search__input"
-    placeholder="Type to search"
+    [placeholder]="'COURSES_PAGE.SEARCH_PLACEHOLDER' | translate"
     #searchInput
     [formControl]="searchControl"
   />

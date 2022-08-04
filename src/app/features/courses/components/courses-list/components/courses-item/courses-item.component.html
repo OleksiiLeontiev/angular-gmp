@@ -36,7 +36,7 @@
         class="courses-list__item_button jasmine-edit-button"
         type="secondary"
         size="small"
-        text="Edit"
+        [text]="'COURSES_PAGE.EDIT_BUTTON' | translate"
         icon="edit"
         [routerLink]="'/courses/' + course.id"
       >
@@ -45,7 +45,7 @@
         class="courses-list__item_button jasmine-delete-button"
         type="secondary"
         size="small"
-        text="Delete"
+        [text]="'COURSES_PAGE.DELETE_BUTTON' | translate"
         icon="delete"
         (click)="deleteClick()"
       >

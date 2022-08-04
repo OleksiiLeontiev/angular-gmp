@@ -1,0 +1,61 @@
+{
+  "BASE": {
+    "REQUIRED": "обязательно",
+    "NOT_FOUND": "404 Нот Фаунд",
+    "LOADING": "Загрузка...",
+    "MINUTES_SHORT": "мин",
+    "HOURS_SHORT": "ч"
+  },
+  "HEADER": {
+    "LOGOUT": "Выйти",
+    "LOGO_TEXT": "Видео Курсы",
+    "RU": "Рус",
+    "EN": "Англ"
+  },
+  "BREADCRUMBS": {
+    "COURSES": "Курсы",
+    "NEW_COURSE": "Новый курс"
+  },
+  "FOOTER": {
+    "TEXT": "Копирайт © Видеокурсы. Все права защищены"
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "Авторизация",
+    "LOGIN_LABEL": "Логин",
+    "PASSWORD_LABEL": "Пароль",
+    "FORGOT_PASSWORD": "Забыл пароль",
+    "LOGIN_BUTTON": "Войти"
+  },
+  "COURSES_PAGE": {
+    "SEARCH_PLACEHOLDER": "Введите для поиска",
+    "DELETE_CONFIRM_MESSAGE": "Удалить {{courseName}}?",
+    "ADD_COURSE": "Добавить курс",
+    "LOAD_MORE": "Загрузить еще",
+    "NOT_FOUND": "Курсы не найдены. Вы можете добавить новый курс",
+    "EDIT_BUTTON": "Изменить",
+    "DELETE_BUTTON": "Удалить"
+  },
+  "COURSE_EDIT_PAGE": {
+    "EDIT_COURSE_TITLE": "Редактирование Курса",
+    "NEW_COURSE_TITLE": "Создание Курса",
+    "TITLE_LABEL": "Заголовок",
+    "TITLE_PH": "Введите текст",
+    "DESCRIPTION_LABEL": "Описание",
+    "DESCRIPTION_PH": "Описание",
+    "DATE_LABEL": "Дата",
+    "DATE_PH": "ММ/ДД/ГГГГ",
+    "DURATION_LABEL": "Продолжительность",
+    "DURATION_PH": "минуты",
+    "AUTHORS_LABEL": "Авторы",
+    "AUTHORS_PH": "Начните печатать",
+    "SAVE_BUTTON": "Сохранить",
+    "CANCEL_BUTTON": "Отмена",
+    "ERRORS": {
+      "MAXLENGTH": "Макс. длина - {{maxlength}}",
+      "REQUIRED": "Это поле обязательно",
+      "ONLY_NUMBERS": "Разрешены только цифры",
+      "DATE_PATTERN": "Должно соответствовать ММ/ДД/ГГГГ",
+      "AUTHORS_REQUIRED": "Выберите хотя бы одного автора"
+    }
+  }
+}
