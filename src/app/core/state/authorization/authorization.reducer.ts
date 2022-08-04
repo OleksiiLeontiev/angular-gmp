@@ -9,11 +9,17 @@ export interface AuthState {
 }
 
 const getToken = (): string | null => {
-  return localStorage.getItem('accessToken');
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('accessToken');
+  }
+  return null;
 };
 const getUserInfo = (): User | null => {
-  const userString = localStorage.getItem('userInfo');
-  return userString ? JSON.parse(userString) : null;
+  if (typeof window !== 'undefined') {
+    const userString = localStorage.getItem('userInfo');
+    return userString ? JSON.parse(userString) : null;
+  }
+  return null;
 };
 
 export const initialState: AuthState = {
