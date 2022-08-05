@@ -3,14 +3,15 @@ import {
   HttpRequest,
   HttpHandler,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { LOCAL_STORAGE } from '@ng-web-apis/common';
 
 @Injectable()
 export class AuthorizationInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(@Inject(LOCAL_STORAGE) private localStorage: Storage) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = localStorage.getItem('accessToken') || '';
+    const token = this.localStorage.getItem('accessToken') || '';
 
     const authReq = req.clone({
       headers: req.headers.set('Authorization', token),

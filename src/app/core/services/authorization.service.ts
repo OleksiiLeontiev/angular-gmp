@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -6,6 +6,7 @@ import { LoginForm, Token } from '../models/authorization';
 import { User } from '../models/user';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { LoaderService } from '.';
+import { LOCAL_STORAGE } from '@ng-web-apis/common';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,8 @@ export class AuthorizationService {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    @Inject(LOCAL_STORAGE) private localStorage: Storage
   ) {}
 
   login(loginFormData: LoginForm): Observable<Token> {
@@ -40,17 +42,17 @@ export class AuthorizationService {
       );
   }
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userInfo');
+    this.localStorage.removeItem('accessToken');
+    this.localStorage.removeItem('userInfo');
     this.router.navigate(['/login']);
   }
 
   setToken(token: string): void {
-    localStorage.setItem('accessToken', token);
+    this.localStorage.setItem('accessToken', token);
   }
 
   setUserInfo(user: string): void {
-    localStorage.setItem('userInfo', user);
+    this.localStorage.setItem('userInfo', user);
   }
 
   getUserInfo(token: string): Observable<User> {
